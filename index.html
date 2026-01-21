@@ -174,6 +174,29 @@
             font-size: 0.9rem;
         }
 
+        .highlight-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px 16px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .highlight-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -833,6 +856,56 @@
             margin-top: 24px;
         }
 
+        /* Style Setting Grid */
+        .style-setting-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .style-setting-item {
+            background: var(--dark);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .style-setting-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .style-emoji {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .style-setting-header input {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--dark-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .style-setting-item textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--dark-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 60px;
+        }
+
         /* Variable Tags */
         .variable-tags {
             display: flex;
@@ -1031,22 +1104,18 @@
                             </div>
 
                             <div class="form-group">
-                                <label>文章長度</label>
-                                <div class="option-buttons" id="lengthOptions">
-                                    <button type="button" class="option-btn" data-value="short">短（50-100字）</button>
-                                    <button type="button" class="option-btn active" data-value="medium">中（150-250字）</button>
-                                    <button type="button" class="option-btn" data-value="long">長（300-500字）</button>
-                                </div>
+                                <label>今日重點補充（選填）</label>
+                                <textarea id="newsHighlight" class="highlight-textarea" placeholder="例如：今日3打數3安打，包含1發滿貫砲，單場7分打點創生涯新高..."></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label>貼文風格</label>
+                                <label>發文風格</label>
                                 <div class="option-buttons style-options" id="styleOptions">
-                                    <button type="button" class="option-btn active" data-value="professional">📰 專業正式</button>
-                                    <button type="button" class="option-btn" data-value="excited">🔥 熱血激昂</button>
-                                    <button type="button" class="option-btn" data-value="humorous">😄 幽默風趣</button>
-                                    <button type="button" class="option-btn" data-value="analytical">📊 數據分析</button>
-                                    <button type="button" class="option-btn" data-value="storytelling">📖 故事敘述</button>
+                                    <button type="button" class="option-btn active" data-value="style1">📰 專業正式</button>
+                                    <button type="button" class="option-btn" data-value="style2">🔥 熱血激昂</button>
+                                    <button type="button" class="option-btn" data-value="style3">😄 幽默風趣</button>
+                                    <button type="button" class="option-btn" data-value="style4">📊 數據分析</button>
+                                    <button type="button" class="option-btn" data-value="style5">📖 故事敘述</button>
                                 </div>
                             </div>
 
@@ -1258,63 +1327,85 @@
                                 <path d="M12 20h9"/>
                                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
                             </svg>
-                            Prompt 基礎模板
+                            提示詞設定（依運動/位置）
                         </h3>
+                        
                         <div class="setting-item">
-                            <div class="hint" style="margin-bottom: 16px; padding: 12px; background: var(--dark); border-radius: 8px;">
-                                <strong>說明：</strong>這是基礎 Prompt，系統會自動加上「風格要求」和「字數要求」後一起送給 AI。
-                                <br><br>
-                                <strong>送出的完整 Prompt 結構：</strong><br>
-                                1. 基礎模板（下方設定）<br>
-                                2. 風格要求（根據選擇的風格自動加入）<br>
-                                3. 字數要求（根據選擇的長度自動加入）<br>
-                                4. 球員資料（從 Google Sheet 查詢）
-                            </div>
-                            <label>基礎 Prompt 模板</label>
-                            <textarea id="promptTemplate" rows="8">你是一位專業的體育社群小編。請根據以下球員資料，撰寫一篇適合社群媒體發布的貼文。
-
-要求：
-1. 開頭要吸引眼球，可用適當的 emoji
-2. 重點突出球員表現和數據
-3. 適合 Facebook / Instagram / Threads 發布
-4. 結尾加上相關的 hashtag</textarea>
+                            <label>⚾ 棒球 - 投手 提示詞</label>
+                            <textarea id="promptBaseballPitcher" rows="6"></textarea>
                         </div>
+                        
                         <div class="setting-item">
-                            <label>預覽完整 Prompt（產生貼文時會送出）</label>
-                            <button class="btn btn-secondary" onclick="previewFullPrompt()" style="margin-top: 8px;">預覽完整 Prompt</button>
-                            <div id="promptPreview" style="display: none; margin-top: 12px; padding: 16px; background: var(--dark); border-radius: 8px; font-size: 0.85rem; white-space: pre-wrap; color: var(--text-muted); max-height: 300px; overflow-y: auto;"></div>
+                            <label>⚾ 棒球 - 野手 提示詞</label>
+                            <textarea id="promptBaseballFielder" rows="6"></textarea>
                         </div>
+                        
+                        <div class="setting-item">
+                            <label>🏀 籃球 提示詞</label>
+                            <textarea id="promptBasketball" rows="6"></textarea>
+                        </div>
+                        
+                        <button class="btn btn-secondary" onclick="resetPrompts()" style="margin-top: 12px;">重設為預設提示詞</button>
                     </div>
 
-                    <!-- 風格設定說明 -->
+                    <!-- 風格設定 -->
                     <div class="settings-group">
                         <h3 class="settings-group-title">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="16" x2="12" y2="12"/>
-                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9"/>
                             </svg>
-                            風格與長度說明
+                            發文風格設定（5 種）
                         </h3>
-                        <div class="setting-item">
-                            <div style="display: grid; gap: 12px;">
-                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
-                                    <strong>📰 專業正式：</strong>用詞精準、客觀報導，適合主流媒體風格
+                        <div class="hint" style="margin-bottom: 16px; padding: 12px; background: var(--dark); border-radius: 8px;">
+                            設定每種風格的名稱和描述，描述會一起送給 AI 作為參考。
+                        </div>
+                        
+                        <div class="style-setting-grid">
+                            <div class="style-setting-item">
+                                <div class="style-setting-header">
+                                    <span class="style-emoji">📰</span>
+                                    <input type="text" id="style1Name" value="專業正式" placeholder="風格名稱">
                                 </div>
-                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
-                                    <strong>🔥 熱血激昂：</strong>充滿熱情與能量，強烈形容詞和感嘆句
+                                <textarea id="style1Desc" rows="2" placeholder="風格描述">用詞精準、客觀報導，適合主流媒體發布的正式風格。</textarea>
+                            </div>
+                            
+                            <div class="style-setting-item">
+                                <div class="style-setting-header">
+                                    <span class="style-emoji">🔥</span>
+                                    <input type="text" id="style2Name" value="熱血激昂" placeholder="風格名稱">
                                 </div>
-                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
-                                    <strong>😄 幽默風趣：</strong>有趣比喻、網路用語、輕鬆調侃
+                                <textarea id="style2Desc" rows="2" placeholder="風格描述">充滿熱情與能量，使用強烈的形容詞和感嘆句，讓讀者感受比賽的激情。</textarea>
+                            </div>
+                            
+                            <div class="style-setting-item">
+                                <div class="style-setting-header">
+                                    <span class="style-emoji">😄</span>
+                                    <input type="text" id="style3Name" value="幽默風趣" placeholder="風格名稱">
                                 </div>
-                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
-                                    <strong>📊 數據分析：</strong>著重數據解讀、統計比較、趨勢分析
+                                <textarea id="style3Desc" rows="2" placeholder="風格描述">適當加入有趣的比喻、網路用語或輕鬆的調侃，讓讀者會心一笑。</textarea>
+                            </div>
+                            
+                            <div class="style-setting-item">
+                                <div class="style-setting-header">
+                                    <span class="style-emoji">📊</span>
+                                    <input type="text" id="style4Name" value="數據分析" placeholder="風格名稱">
                                 </div>
-                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
-                                    <strong>📖 故事敘述：</strong>描繪比賽情境、球員心路歷程
+                                <textarea id="style4Desc" rows="2" placeholder="風格描述">著重於數據解讀、統計比較和趨勢分析，用數字說話。</textarea>
+                            </div>
+                            
+                            <div class="style-setting-item">
+                                <div class="style-setting-header">
+                                    <span class="style-emoji">📖</span>
+                                    <input type="text" id="style5Name" value="故事敘述" placeholder="風格名稱">
                                 </div>
+                                <textarea id="style5Desc" rows="2" placeholder="風格描述">描繪比賽情境、球員心路歷程，讓讀者有身歷其境的感覺。</textarea>
                             </div>
                         </div>
+                        
+                        <button class="btn btn-secondary" onclick="resetStyles()" style="margin-top: 12px;">重設為預設風格</button>
                     </div>
 
                     <div class="settings-actions">
@@ -1364,45 +1455,48 @@
             currentUser: null,
             draftContent: '',
             selectedPlatforms: [],
-            selectedLength: 'medium',
-            selectedStyle: 'professional',
+            selectedStyle: 'style1',
             isGenerating: false,
             isPublishing: false
         };
 
-        // ==================== Length & Style Options ====================
-        const LENGTH_OPTIONS = {
-            short: { name: '短', words: '50-100字', description: '簡短有力，適合快速瀏覽' },
-            medium: { name: '中', words: '150-250字', description: '完整內容，適合一般發文' },
-            long: { name: '長', words: '300-500字', description: '深度報導，適合詳細分析' }
+        // ==================== Default Style Options ====================
+        const DEFAULT_STYLES = {
+            style1: { name: '專業正式', emoji: '📰', description: '用詞精準、客觀報導，適合主流媒體發布的正式風格。' },
+            style2: { name: '熱血激昂', emoji: '🔥', description: '充滿熱情與能量，使用強烈的形容詞和感嘆句，讓讀者感受比賽的激情。' },
+            style3: { name: '幽默風趣', emoji: '😄', description: '適當加入有趣的比喻、網路用語或輕鬆的調侃，讓讀者會心一笑。' },
+            style4: { name: '數據分析', emoji: '📊', description: '著重於數據解讀、統計比較和趨勢分析，用數字說話。' },
+            style5: { name: '故事敘述', emoji: '📖', description: '描繪比賽情境、球員心路歷程，讓讀者有身歷其境的感覺。' }
         };
 
-        const STYLE_OPTIONS = {
-            professional: { 
-                name: '專業正式', 
-                emoji: '📰',
-                prompt: '請以專業正式的體育新聞風格撰寫，用詞精準、客觀報導，適合主流媒體發布。'
-            },
-            excited: { 
-                name: '熱血激昂', 
-                emoji: '🔥',
-                prompt: '請以熱血激昂的風格撰寫，充滿熱情與能量，使用強烈的形容詞和感嘆句，讓讀者感受比賽的激情。'
-            },
-            humorous: { 
-                name: '幽默風趣', 
-                emoji: '😄',
-                prompt: '請以幽默風趣的風格撰寫，適當加入有趣的比喻、網路用語或輕鬆的調侃，讓讀者會心一笑。'
-            },
-            analytical: { 
-                name: '數據分析', 
-                emoji: '📊',
-                prompt: '請以數據分析的風格撰寫，著重於數據解讀、統計比較和趨勢分析，用數字說話。'
-            },
-            storytelling: { 
-                name: '故事敘述', 
-                emoji: '📖',
-                prompt: '請以故事敘述的風格撰寫，描繪比賽情境、球員心路歷程，讓讀者有身歷其境的感覺。'
-            }
+        // ==================== Default Prompts ====================
+        const DEFAULT_PROMPTS = {
+            baseballPitcher: `你是一位專業的體育社群小編。請根據以下投手資料，撰寫一篇適合社群媒體發布的貼文。
+
+要求：
+1. 開頭要吸引眼球，可用適當的 emoji
+2. 重點突出投手表現（局數、失分、三振、WHIP 等）
+3. 適合 Facebook / Instagram / Threads 發布
+4. 字數約 150-300 字
+5. 結尾加上相關的 hashtag`,
+
+            baseballFielder: `你是一位專業的體育社群小編。請根據以下野手資料，撰寫一篇適合社群媒體發布的貼文。
+
+要求：
+1. 開頭要吸引眼球，可用適當的 emoji
+2. 重點突出打擊表現（打擊率、安打、全壘打、打點等）
+3. 適合 Facebook / Instagram / Threads 發布
+4. 字數約 150-300 字
+5. 結尾加上相關的 hashtag`,
+
+            basketball: `你是一位專業的體育社群小編。請根據以下籃球員資料，撰寫一篇適合社群媒體發布的貼文。
+
+要求：
+1. 開頭要吸引眼球，可用適當的 emoji
+2. 重點突出球員表現（得分、籃板、助攻、命中率等）
+3. 適合 Facebook / Instagram / Threads 發布
+4. 字數約 150-300 字
+5. 結尾加上相關的 hashtag`
         };
 
         // ==================== 50 Users ====================
@@ -1465,7 +1559,16 @@
             webhookGenerate: '',
             webhookPublish: '',
             googleSheetUrl: '',
-            promptTemplate: ''
+            // 三種提示詞
+            promptBaseballPitcher: DEFAULT_PROMPTS.baseballPitcher,
+            promptBaseballFielder: DEFAULT_PROMPTS.baseballFielder,
+            promptBasketball: DEFAULT_PROMPTS.basketball,
+            // 五種風格
+            style1: DEFAULT_STYLES.style1,
+            style2: DEFAULT_STYLES.style2,
+            style3: DEFAULT_STYLES.style3,
+            style4: DEFAULT_STYLES.style4,
+            style5: DEFAULT_STYLES.style5
         };
 
         // ==================== DOM Elements ====================
@@ -1551,15 +1654,7 @@
             }
         });
 
-        // ==================== Length & Style Selection ====================
-        document.querySelectorAll('#lengthOptions .option-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('#lengthOptions .option-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.selectedLength = btn.dataset.value;
-            });
-        });
-
+        // ==================== Style Selection ====================
         document.querySelectorAll('#styleOptions .option-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('#styleOptions .option-btn').forEach(b => b.classList.remove('active'));
@@ -1568,40 +1663,21 @@
             });
         });
 
-        // ==================== Build Prompt ====================
-        function buildPrompt(playerName, sport, position, stats, length, style) {
-            const lengthInfo = LENGTH_OPTIONS[length];
-            const styleInfo = STYLE_OPTIONS[style];
-            
-            // 取得使用者自訂的 Prompt 模板
-            const baseTemplate = SETTINGS.promptTemplate || getDefaultPromptTemplate();
-            
-            // 組合完整 Prompt
-            const fullPrompt = `${baseTemplate}
-
-【風格要求】
-${styleInfo.prompt}
-
-【字數要求】
-請將貼文控制在 ${lengthInfo.words}，${lengthInfo.description}。
-
-【球員資料】
-球員：${playerName}
-運動：${sport === 'baseball' ? '棒球' : '籃球'}
-${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
-數據：${stats || '請從資料庫查詢'}
-`;
-            return fullPrompt;
+        // ==================== Get Current Prompt & Style ====================
+        function getCurrentPrompt(sport, position) {
+            if (sport === 'baseball') {
+                if (position === 'pitcher') {
+                    return SETTINGS.promptBaseballPitcher || DEFAULT_PROMPTS.baseballPitcher;
+                } else {
+                    return SETTINGS.promptBaseballFielder || DEFAULT_PROMPTS.baseballFielder;
+                }
+            } else {
+                return SETTINGS.promptBasketball || DEFAULT_PROMPTS.basketball;
+            }
         }
 
-        function getDefaultPromptTemplate() {
-            return `你是一位專業的體育社群小編。請根據以下球員資料，撰寫一篇適合社群媒體發布的貼文。
-
-要求：
-1. 開頭要吸引眼球，可用適當的 emoji
-2. 重點突出球員表現和數據
-3. 適合 Facebook / Instagram / Threads 發布
-4. 結尾加上相關的 hashtag`;
+        function getCurrentStyle(styleKey) {
+            return SETTINGS[styleKey] || DEFAULT_STYLES[styleKey];
         }
 
         // ==================== Generate Post ====================
@@ -1609,6 +1685,7 @@ ${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
             const sportType = document.getElementById('sportType').value;
             const position = document.getElementById('position').value;
             const playerName = document.getElementById('playerName').value.trim();
+            const newsHighlight = document.getElementById('newsHighlight').value.trim();
 
             if (!sportType) {
                 showToast('請選擇運動類型', 'error');
@@ -1626,36 +1703,50 @@ ${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
             // Show loading
             showLoading('正在產生貼文...');
 
-            // Build the prompt
-            const prompt = buildPrompt(
-                playerName, 
-                sportType, 
-                position, 
-                null, // stats will be fetched by Make
-                state.selectedLength, 
-                state.selectedStyle
-            );
+            // 取得對應的提示詞
+            const prompt = getCurrentPrompt(sportType, position);
+            
+            // 取得風格設定
+            const styleData = getCurrentStyle(state.selectedStyle);
 
-            // Prepare data - 包含所有選項和 Prompt
+            // 準備送出的資料
             const data = {
-                // 基本資料
-                sport: sportType,
-                position: position || '',
+                // 1. 運動種類
+                sport: sportType === 'baseball' ? '棒球' : '籃球',
+                sportType: sportType,
+                
+                // 2. 位置
+                position: position === 'pitcher' ? '投手' : (position === 'fielder' ? '野手' : ''),
+                positionType: position || '',
+                
+                // 3. 球員名字
                 playerName: playerName,
+                
+                // 4. 發文風格
+                styleKey: state.selectedStyle,
+                styleName: styleData.name,
+                styleEmoji: styleData.emoji,
+                styleDescription: styleData.description,
+                
+                // 5. 提示詞（根據運動/位置自動帶入）
+                prompt: prompt,
+                
+                // 6. 今日重點補充（選填）
+                newsHighlight: newsHighlight,
+                
+                // 7. 使用者資訊
                 userId: state.currentUser?.id || 'guest',
-                
-                // 選項
-                length: state.selectedLength,
-                lengthDescription: LENGTH_OPTIONS[state.selectedLength].words,
-                style: state.selectedStyle,
-                styleDescription: STYLE_OPTIONS[state.selectedStyle].name,
-                stylePrompt: STYLE_OPTIONS[state.selectedStyle].prompt,
-                
-                // 完整 Prompt
-                prompt: prompt
+                userName: state.currentUser?.name || 'guest'
             };
 
-            console.log('Sending to webhook:', data);
+            console.log('=== 送出資料 ===');
+            console.log('運動種類:', data.sport);
+            console.log('位置:', data.position);
+            console.log('球員:', data.playerName);
+            console.log('風格:', data.styleName);
+            console.log('重點補充:', data.newsHighlight || '(無)');
+            console.log('提示詞:', data.prompt);
+            console.log('完整資料:', data);
             console.log('Webhook URL:', SETTINGS.webhookGenerate);
 
             // Call webhook or use mock
@@ -1690,127 +1781,52 @@ ${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
                 showToast('提示：尚未設定 Webhook，使用模擬資料', 'success');
                 setTimeout(() => {
                     hideLoading();
-                    const mockContent = generateMockPost(playerName, sportType, position, state.selectedLength, state.selectedStyle);
+                    const mockContent = generateMockPost(playerName, sportType, position, state.selectedStyle, newsHighlight);
                     setDraft(mockContent);
                 }, 1500);
             }
         });
 
-        function generateMockPost(name, sport, position, length, style) {
-            const styleEmoji = STYLE_OPTIONS[style].emoji;
+        function generateMockPost(name, sport, position, styleKey, highlight) {
+            const style = getCurrentStyle(styleKey);
+            const emoji = style.emoji;
             
-            // 根據長度決定內容
             let content = '';
             
             if (sport === 'baseball') {
                 if (position === 'pitcher') {
-                    if (length === 'short') {
-                        content = `${styleEmoji} ${name} 今日先發好投！主投6局失2分、K7，率隊奪勝 💪\n\n#CPBL #${name}`;
-                    } else if (length === 'long') {
-                        content = `${styleEmoji} ${name} 強勢登板，展現王牌氣勢！
-
-今日在主場面對強敵，${name} 繳出精彩的先發表現。從第一局開始就展現絕佳的控球能力，速球穩定維持在 145 公里以上，變化球更是讓打者頻頻揮空。
-
-📊 完整數據：
-• 主投 6.0 局
-• 僅失 2 分（自責分 2）
-• 三振 7 次
-• 保送 2 次  
-• WHIP 1.05
-
-關鍵的第五局，面對滿壘危機，${name} 展現大將之風，連續三振化解險境，全場球迷沸騰！
-
-總教練賽後表示：「他今天的表現非常穩定，這就是我們期待的王牌投手。」
-
-${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
-
-#CPBL #棒球 #${name} #投手 #好投`;
-                    } else {
-                        content = `${styleEmoji} ${name} 今日先發表現亮眼！
+                    content = `${emoji} ${name} 今日先發表現亮眼！
 
 📊 主投 6 局僅失 2 分
 📊 三振 7 人、WHIP 1.05
 📊 球速維持 145km/h 以上
 
-關鍵時刻展現壓制力，幫助球隊拿下重要勝利！下一場比賽值得期待 💪
+${highlight ? `🔥 重點：${highlight}\n\n` : ''}關鍵時刻展現壓制力，幫助球隊拿下重要勝利！💪
 
 #CPBL #棒球 #${name} #投手`;
-                    }
                 } else {
-                    if (length === 'short') {
-                        content = `${styleEmoji} ${name} 開轟啦！4打數3安、1轟3打點，持續火燙 🔥\n\n#CPBL #${name}`;
-                    } else if (length === 'long') {
-                        content = `${styleEmoji} ${name} 今日火力全開，率隊大勝！
-
-主場迎戰的比賽中，${name} 用球棒證明自己是聯盟最可怕的打者之一。從首打席開始就展現絕佳手感，將球扎實擊出形成安打。
-
-📊 今日完整數據：
-• 4 打數 3 安打
-• 1 發全壘打（本季第 18 轟）
-• 3 分打點
-• 打擊率提升至 .325
-
-五局下半，${name} 面對對方強投，抓住紅中速球，一棒掃向左外野全壘打牆，三分彈徹底打爆比賽！全場球迷起立鼓掌。
-
-「今天狀況很好，就是專注在每一個打席。」${name} 賽後謙虛表示。
-
-本季 ${name} 持續穩定輸出，是球隊打線的核心支柱，季後賽可望扮演關鍵角色！
-
-#CPBL #棒球 #${name} #全壘打 #打擊王`;
-                    } else {
-                        content = `${styleEmoji} ${name} 今日開轟！
+                    content = `${emoji} ${name} 今日開轟！
 
 🔥 打擊表現超火燙
 📊 4 打數 3 安打
 📊 1 發全壘打、3 分打點
 📊 本季打擊率 .325
 
-關鍵時刻的可靠打者，持續用表現證明自己！👊
+${highlight ? `💥 重點：${highlight}\n\n` : ''}關鍵時刻的可靠打者！👊
 
 #CPBL #棒球 #${name} #全壘打`;
-                    }
                 }
             } else {
-                if (length === 'short') {
-                    content = `${styleEmoji} ${name} 22分8籃板6助攻，主宰比賽！MVP級表現 🏆\n\n#PLG #${name}`;
-                } else if (length === 'long') {
-                    content = `${styleEmoji} ${name} 今晚主宰全場，帶領球隊拿下關鍵勝利！
-
-面對同區勁敵的強碰，${name} 從開賽就展現侵略性，頻頻切入禁區取分，外線手感也十分火燙。
-
-📊 今晚完整數據：
-• 得分：22 分
-• 籃板：8 個
-• 助攻：6 次
-• 投籃命中率：52%
-• 三分球：4/7
-
-第四節關鍵時刻，${name} 連續兩次急停跳投命中，幫助球隊拉開比分差距。最後兩分鐘更是親自操刀控場，穩穩守住勝利。
-
-「今天團隊防守做得很好，大家都很拚。」${name} 將功勞歸給隊友。
-
-總教練賽後盛讚：「他就是我們的領袖，關鍵時刻總是挺身而出。」
-
-#PLG #籃球 #${name} #MVP`;
-                } else {
-                    content = `${styleEmoji} ${name} 主宰比賽！
+                content = `${emoji} ${name} 主宰比賽！
 
 今日數據超亮眼 🔥
 📊 22 分 8 籃板 6 助攻
 📊 命中率 52%
 📊 三分球 4/7
 
-關鍵時刻挺身而出，帶領球隊拿下勝利！MVP 級表現 🏆
+${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
 
 #PLG #籃球 #${name}`;
-                }
-            }
-
-            // 根據風格微調
-            if (style === 'humorous') {
-                content = content.replace('！', '！（太扯了吧）');
-            } else if (style === 'excited') {
-                content = content.replace('！', '！！！🔥🔥🔥');
             }
 
             return content;
@@ -1967,14 +1983,40 @@ ${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
         function loadSettings() {
             const saved = localStorage.getItem('sportpress_settings');
             if (saved) {
-                SETTINGS = JSON.parse(saved);
-                document.getElementById('webhookGenerate').value = SETTINGS.webhookGenerate || '';
-                document.getElementById('webhookPublish').value = SETTINGS.webhookPublish || '';
-                document.getElementById('googleSheetUrl').value = SETTINGS.googleSheetUrl || '';
-                if (SETTINGS.promptTemplate) {
-                    document.getElementById('promptTemplate').value = SETTINGS.promptTemplate;
-                }
+                const parsed = JSON.parse(saved);
+                SETTINGS = { ...SETTINGS, ...parsed };
             }
+            
+            // Webhook
+            document.getElementById('webhookGenerate').value = SETTINGS.webhookGenerate || '';
+            document.getElementById('webhookPublish').value = SETTINGS.webhookPublish || '';
+            document.getElementById('googleSheetUrl').value = SETTINGS.googleSheetUrl || '';
+            
+            // 提示詞
+            document.getElementById('promptBaseballPitcher').value = SETTINGS.promptBaseballPitcher || DEFAULT_PROMPTS.baseballPitcher;
+            document.getElementById('promptBaseballFielder').value = SETTINGS.promptBaseballFielder || DEFAULT_PROMPTS.baseballFielder;
+            document.getElementById('promptBasketball').value = SETTINGS.promptBasketball || DEFAULT_PROMPTS.basketball;
+            
+            // 風格
+            const style1 = SETTINGS.style1 || DEFAULT_STYLES.style1;
+            const style2 = SETTINGS.style2 || DEFAULT_STYLES.style2;
+            const style3 = SETTINGS.style3 || DEFAULT_STYLES.style3;
+            const style4 = SETTINGS.style4 || DEFAULT_STYLES.style4;
+            const style5 = SETTINGS.style5 || DEFAULT_STYLES.style5;
+            
+            document.getElementById('style1Name').value = style1.name;
+            document.getElementById('style1Desc').value = style1.description;
+            document.getElementById('style2Name').value = style2.name;
+            document.getElementById('style2Desc').value = style2.description;
+            document.getElementById('style3Name').value = style3.name;
+            document.getElementById('style3Desc').value = style3.description;
+            document.getElementById('style4Name').value = style4.name;
+            document.getElementById('style4Desc').value = style4.description;
+            document.getElementById('style5Name').value = style5.name;
+            document.getElementById('style5Desc').value = style5.description;
+            
+            // 更新按鈕顯示
+            updateStyleButtons();
         }
 
         function saveSettings() {
@@ -1982,12 +2024,76 @@ ${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
                 webhookGenerate: document.getElementById('webhookGenerate').value.trim(),
                 webhookPublish: document.getElementById('webhookPublish').value.trim(),
                 googleSheetUrl: document.getElementById('googleSheetUrl').value.trim(),
-                promptTemplate: document.getElementById('promptTemplate').value
+                
+                // 提示詞
+                promptBaseballPitcher: document.getElementById('promptBaseballPitcher').value,
+                promptBaseballFielder: document.getElementById('promptBaseballFielder').value,
+                promptBasketball: document.getElementById('promptBasketball').value,
+                
+                // 風格
+                style1: {
+                    name: document.getElementById('style1Name').value,
+                    emoji: '📰',
+                    description: document.getElementById('style1Desc').value
+                },
+                style2: {
+                    name: document.getElementById('style2Name').value,
+                    emoji: '🔥',
+                    description: document.getElementById('style2Desc').value
+                },
+                style3: {
+                    name: document.getElementById('style3Name').value,
+                    emoji: '😄',
+                    description: document.getElementById('style3Desc').value
+                },
+                style4: {
+                    name: document.getElementById('style4Name').value,
+                    emoji: '📊',
+                    description: document.getElementById('style4Desc').value
+                },
+                style5: {
+                    name: document.getElementById('style5Name').value,
+                    emoji: '📖',
+                    description: document.getElementById('style5Desc').value
+                }
             };
+            
             localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
             console.log('Settings saved:', SETTINGS);
             updateWebhookStatus();
+            updateStyleButtons();
             showToast('設定已儲存');
+        }
+        
+        function updateStyleButtons() {
+            const buttons = document.querySelectorAll('#styleOptions .option-btn');
+            const styles = ['style1', 'style2', 'style3', 'style4', 'style5'];
+            
+            buttons.forEach((btn, index) => {
+                const style = SETTINGS[styles[index]] || DEFAULT_STYLES[styles[index]];
+                btn.textContent = `${style.emoji} ${style.name}`;
+            });
+        }
+        
+        function resetPrompts() {
+            document.getElementById('promptBaseballPitcher').value = DEFAULT_PROMPTS.baseballPitcher;
+            document.getElementById('promptBaseballFielder').value = DEFAULT_PROMPTS.baseballFielder;
+            document.getElementById('promptBasketball').value = DEFAULT_PROMPTS.basketball;
+            showToast('提示詞已重設');
+        }
+        
+        function resetStyles() {
+            document.getElementById('style1Name').value = DEFAULT_STYLES.style1.name;
+            document.getElementById('style1Desc').value = DEFAULT_STYLES.style1.description;
+            document.getElementById('style2Name').value = DEFAULT_STYLES.style2.name;
+            document.getElementById('style2Desc').value = DEFAULT_STYLES.style2.description;
+            document.getElementById('style3Name').value = DEFAULT_STYLES.style3.name;
+            document.getElementById('style3Desc').value = DEFAULT_STYLES.style3.description;
+            document.getElementById('style4Name').value = DEFAULT_STYLES.style4.name;
+            document.getElementById('style4Desc').value = DEFAULT_STYLES.style4.description;
+            document.getElementById('style5Name').value = DEFAULT_STYLES.style5.name;
+            document.getElementById('style5Desc').value = DEFAULT_STYLES.style5.description;
+            showToast('風格已重設');
         }
 
         async function testWebhook(type) {
@@ -2057,7 +2163,8 @@ ${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     try {
-                        SETTINGS = JSON.parse(event.target.result);
+                        const parsed = JSON.parse(event.target.result);
+                        SETTINGS = { ...SETTINGS, ...parsed };
                         localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
                         loadSettings();
                         showToast('設定已匯入');
@@ -2068,13 +2175,6 @@ ${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
                 reader.readAsText(e.target.files[0]);
             };
             input.click();
-        }
-
-        function previewFullPrompt() {
-            const preview = document.getElementById('promptPreview');
-            const prompt = buildPrompt('林安可', 'baseball', 'fielder', '打擊率 .325、18 轟、67 打點', state.selectedLength, state.selectedStyle);
-            preview.textContent = prompt;
-            preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>
