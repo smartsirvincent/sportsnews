@@ -61,14 +61,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-logo {
@@ -114,10 +108,9 @@
             font-weight: 500;
             color: var(--text-secondary);
             margin-bottom: 8px;
-            letter-spacing: 0.5px;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 14px 16px;
             background: var(--dark);
@@ -128,7 +121,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
@@ -136,6 +129,49 @@
 
         .form-group input::placeholder {
             color: var(--text-muted);
+        }
+
+        /* Option Buttons */
+        .option-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .option-buttons.style-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .option-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 12px;
+            background: var(--dark);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+        }
+
+        .option-btn.active {
+            border-color: var(--primary);
+            background: rgba(230, 57, 70, 0.15);
+            color: var(--text-primary);
+        }
+
+        .style-options .option-btn {
+            padding: 12px 10px;
+            font-size: 0.9rem;
         }
 
         .btn {
@@ -154,7 +190,6 @@
         }
 
         .btn-primary {
-            width: 100%;
             background: var(--primary);
             color: white;
         }
@@ -163,6 +198,13 @@
             background: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: var(--dark-card);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .btn-secondary {
@@ -176,6 +218,15 @@
             border-color: var(--secondary);
         }
 
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #27ae60;
+        }
+
         .btn-ghost {
             background: transparent;
             color: var(--text-secondary);
@@ -185,6 +236,10 @@
         .btn-ghost:hover {
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-full {
+            width: 100%;
         }
 
         /* Main App Layout */
@@ -238,6 +293,9 @@
             cursor: pointer;
             border-radius: var(--radius-sm);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .nav-btn:hover {
@@ -276,7 +334,7 @@
         /* Main Content */
         .main-content {
             padding: 32px;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -295,64 +353,6 @@
             to { opacity: 1; }
         }
 
-        /* Step Indicator */
-        .step-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .step-number {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--dark-card);
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .step.active .step-number {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        .step.completed .step-number {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .step-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .step.active .step-label {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .step-divider {
-            width: 60px;
-            height: 2px;
-            background: var(--border);
-        }
-
         /* Cards */
         .card {
             background: var(--dark-surface);
@@ -363,9 +363,9 @@
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -375,172 +375,63 @@
             color: var(--primary);
         }
 
-        /* Select Player Section */
-        .select-row {
+        /* Two Column Layout */
+        .two-column {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .select-group label {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .select-group select,
-        .select-group input {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--dark);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .select-group select:focus,
-        .select-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .select-group select option {
-            background: var(--dark-surface);
-            color: var(--text-primary);
-        }
-
-        /* Player Stats Display */
-        .player-stats {
-            display: none;
-            background: var(--dark);
-            border-radius: var(--radius-sm);
-            padding: 24px;
-            margin-top: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .player-stats.visible {
-            display: block;
-            animation: slideDown 0.4s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .player-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .player-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .player-info h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .player-info p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .player-info .team-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--secondary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 16px;
-            background: var(--dark-surface);
-            border-radius: var(--radius-sm);
-        }
-
-        .stat-value {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Action Buttons Row */
-        .action-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .btn-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* News Editor */
-        .editor-container {
-            display: grid;
-            grid-template-columns: 1fr 380px;
+            grid-template-columns: 400px 1fr;
             gap: 24px;
         }
 
         @media (max-width: 1024px) {
-            .editor-container {
+            .two-column {
                 grid-template-columns: 1fr;
             }
         }
 
-        .editor-main textarea {
+        /* Input Section */
+        .input-section .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Draft Section */
+        .draft-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .draft-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .draft-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .draft-status.ready {
+            color: var(--success);
+        }
+
+        .draft-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .draft-status.ready .draft-status-dot {
+            background: var(--success);
+        }
+
+        .draft-textarea {
             width: 100%;
-            min-height: 400px;
+            min-height: 350px;
             padding: 20px;
             background: var(--dark);
             border: 1px solid var(--border);
@@ -550,11 +441,21 @@
             line-height: 1.8;
             resize: vertical;
             font-family: 'Noto Sans TC', sans-serif;
+            transition: all 0.3s ease;
         }
 
-        .editor-main textarea:focus {
+        .draft-textarea:focus {
             outline: none;
             border-color: var(--primary);
+        }
+
+        .draft-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .draft-textarea:disabled {
+            background: var(--dark-card);
+            color: var(--text-muted);
         }
 
         .char-count {
@@ -564,97 +465,31 @@
             margin-top: 8px;
         }
 
-        /* News References */
-        .news-reference {
-            background: var(--dark);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+        /* Platform Selection */
+        .platform-selection {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
         }
 
-        .news-reference:hover {
-            border-color: var(--text-muted);
-        }
-
-        .news-reference h4 {
+        .platform-selection h4 {
             font-size: 0.95rem;
             font-weight: 500;
-            margin-bottom: 8px;
-            line-height: 1.4;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
         }
 
-        .news-reference p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-
-        .news-reference .source {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .btn-quote {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            background: var(--secondary);
-            color: var(--text-primary);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-quote:hover {
-            background: var(--primary);
-        }
-
-        /* Publish Section */
-        .publish-preview {
-            background: var(--dark);
-            border-radius: var(--radius-sm);
-            padding: 24px;
-            border: 1px solid var(--border);
-            margin-bottom: 24px;
-        }
-
-        .preview-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .preview-content {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-        }
-
-        .platform-select {
+        .platform-checkboxes {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
         }
 
-        .platform-option {
-            flex: 1;
-            min-width: 140px;
-        }
-
-        .platform-option input {
-            display: none;
-        }
-
-        .platform-option label {
+        .platform-checkbox {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 20px;
+            gap: 10px;
+            padding: 12px 20px;
             background: var(--dark);
             border: 2px solid var(--border);
             border-radius: var(--radius-sm);
@@ -662,13 +497,17 @@
             transition: all 0.3s ease;
         }
 
-        .platform-option input:checked + label {
+        .platform-checkbox:hover {
+            border-color: var(--text-muted);
+        }
+
+        .platform-checkbox.selected {
             border-color: var(--primary);
             background: rgba(230, 57, 70, 0.1);
         }
 
-        .platform-option label:hover {
-            border-color: var(--text-muted);
+        .platform-checkbox input {
+            display: none;
         }
 
         .platform-icon {
@@ -679,54 +518,81 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        .platform-icon.threads {
-            background: #000;
-            color: #fff;
-        }
+        .platform-icon.threads { background: #000; color: #fff; }
+        .platform-icon.facebook { background: #1877F2; color: #fff; }
+        .platform-icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
 
-        .platform-icon.facebook {
-            background: #1877F2;
-            color: #fff;
-        }
-
-        .platform-icon.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: #fff;
-        }
-
-        .platform-name {
-            font-weight: 500;
-        }
-
-        .checkbox-custom {
-            width: 22px;
-            height: 22px;
+        .platform-checkbox .check-icon {
+            width: 20px;
+            height: 20px;
             border: 2px solid var(--border);
             border-radius: 4px;
-            margin-left: auto;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-left: auto;
             transition: all 0.3s ease;
         }
 
-        .platform-option input:checked + label .checkbox-custom {
+        .platform-checkbox.selected .check-icon {
             background: var(--primary);
             border-color: var(--primary);
         }
 
-        .checkbox-custom svg {
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s ease;
+        .platform-checkbox.selected .check-icon svg {
+            display: block;
         }
 
-        .platform-option input:checked + label .checkbox-custom svg {
-            opacity: 1;
-            transform: scale(1);
+        .platform-checkbox .check-icon svg {
+            display: none;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 27, 42, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
         }
 
         /* Success Modal */
@@ -759,28 +625,25 @@
         }
 
         @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: rgba(46, 204, 113, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 24px;
         }
 
-        .modal-icon svg {
+        .modal-icon.success {
+            background: rgba(46, 204, 113, 0.15);
+        }
+
+        .modal-icon.success svg {
             color: var(--success);
         }
 
@@ -814,155 +677,11 @@
             border-bottom: none;
         }
 
-        .result-status {
+        .publish-result-item svg {
             color: var(--success);
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        /* My Articles */
-        .articles-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        .articles-header h2 {
-            font-size: 1.5rem;
-        }
-
-        .filter-select {
-            padding: 10px 16px;
-            background: var(--dark-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        .articles-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .articles-table th,
-        .articles-table td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .articles-table th {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .articles-table tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-badge.published {
-            background: rgba(46, 204, 113, 0.15);
-            color: var(--success);
-        }
-
-        .status-badge.draft {
-            background: rgba(243, 156, 18, 0.15);
-            color: var(--warning);
-        }
-
-        .platform-tags {
-            display: flex;
-            gap: 6px;
-        }
-
-        .platform-tag {
-            padding: 2px 8px;
-            background: var(--dark);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* Loading State */
-        .loading {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 40px;
-            color: var(--text-muted);
-        }
-
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                padding: 0 16px;
-            }
-
-            .header-nav {
-                display: none;
-            }
-
-            .main-content {
-                padding: 20px 16px;
-            }
-
-            .step-indicator {
-                flex-wrap: wrap;
-            }
-
-            .step-divider {
-                display: none;
-            }
-
-            .select-row {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .platform-select {
-                flex-direction: column;
-            }
-        }
-
-        /* Toast Notification */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -986,89 +705,12 @@
             opacity: 1;
         }
 
-        .toast.success {
-            border-left: 4px solid var(--success);
-        }
-
-        .toast.error {
-            border-left: 4px solid var(--primary);
-        }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--primary); }
 
         /* Settings Page */
         .settings-container {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 900px) {
-            .settings-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .settings-nav {
-            background: var(--dark-surface);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            padding: 16px;
-            height: fit-content;
-            position: sticky;
-            top: 94px;
-        }
-
-        .settings-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        .settings-nav-item:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .settings-nav-item.active {
-            color: var(--primary);
-            background: rgba(230, 57, 70, 0.1);
-        }
-
-        .settings-nav-item svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .settings-section {
-            display: none;
-        }
-
-        .settings-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .settings-header {
-            margin-bottom: 24px;
-        }
-
-        .settings-header h2 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .settings-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            max-width: 800px;
         }
 
         .settings-group {
@@ -1118,7 +760,6 @@
 
         .setting-item input[type="text"],
         .setting-item input[type="url"],
-        .setting-item input[type="password"],
         .setting-item textarea {
             width: 100%;
             padding: 12px 16px;
@@ -1128,18 +769,16 @@
             color: var(--text-primary);
             font-size: 0.95rem;
             font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
         }
 
         .setting-item input:focus,
         .setting-item textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
         }
 
         .setting-item textarea {
-            min-height: 120px;
+            min-height: 150px;
             resize: vertical;
             font-family: 'Noto Sans TC', sans-serif;
         }
@@ -1162,7 +801,6 @@
             cursor: pointer;
             font-size: 0.9rem;
             white-space: nowrap;
-            transition: all 0.3s ease;
         }
 
         .btn-test:hover {
@@ -1181,95 +819,26 @@
             display: block;
             background: rgba(46, 204, 113, 0.15);
             color: var(--success);
-            border: 1px solid rgba(46, 204, 113, 0.3);
         }
 
         .test-result.error {
             display: block;
             background: rgba(230, 57, 70, 0.15);
             color: var(--primary);
-            border: 1px solid rgba(230, 57, 70, 0.3);
-        }
-
-        .api-key-input {
-            position: relative;
-        }
-
-        .api-key-input input {
-            padding-right: 50px;
-        }
-
-        .toggle-visibility {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .toggle-visibility:hover {
-            color: var(--text-primary);
         }
 
         .settings-actions {
             display: flex;
             gap: 12px;
             margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
         }
 
-        /* Prompt Template */
-        .prompt-template {
-            background: var(--dark);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .prompt-template-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .prompt-template-title {
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .prompt-template-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            background: var(--dark-card);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-sm:hover {
-            background: var(--secondary);
-            border-color: var(--secondary);
-        }
-
+        /* Variable Tags */
         .variable-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px;
+            margin-bottom: 16px;
         }
 
         .variable-tag {
@@ -1279,7 +848,6 @@
             font-size: 0.75rem;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
         .variable-tag:hover {
@@ -1287,123 +855,82 @@
             color: white;
         }
 
-        /* Toggle Switch */
-        .toggle-setting {
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header { padding: 0 16px; }
+            .header-nav { display: none; }
+            .main-content { padding: 20px 16px; }
+            .platform-checkboxes { flex-direction: column; }
+            .action-buttons { flex-direction: column; }
+        }
+
+        /* History Section */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .history-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 16px;
             background: var(--dark);
             border-radius: var(--radius-sm);
-            margin-bottom: 12px;
+            border: 1px solid var(--border);
         }
 
-        .toggle-setting:last-child {
-            margin-bottom: 0;
-        }
-
-        .toggle-info h4 {
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .toggle-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--dark-card);
-            border-radius: 26px;
-            transition: 0.3s;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-
-        .toggle-switch input:checked + .toggle-slider {
-            background: var(--primary);
-        }
-
-        .toggle-switch input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-            background: white;
-        }
-
-        /* Platform Config Cards */
-        .platform-config {
-            display: grid;
+        .history-item-info {
+            display: flex;
+            align-items: center;
             gap: 16px;
         }
 
-        .platform-config-card {
-            background: var(--dark);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-        }
-
-        .platform-config-header {
+        .history-item-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
-        .platform-config-header .platform-icon {
-            width: 40px;
-            height: 40px;
+        .history-item-details h4 {
             font-size: 1rem;
+            margin-bottom: 4px;
         }
 
-        .platform-config-header h4 {
-            font-size: 1rem;
-            font-weight: 500;
+        .history-item-details p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
-        .platform-config-header .status {
-            margin-left: auto;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+        .history-item-meta {
+            text-align: right;
         }
 
-        .platform-config-header .status.connected {
-            background: rgba(46, 204, 113, 0.15);
-            color: var(--success);
+        .history-item-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
         }
 
-        .platform-config-header .status.disconnected {
-            background: rgba(243, 156, 18, 0.15);
-            color: var(--warning);
+        .history-item-platforms {
+            display: flex;
+            gap: 4px;
+            justify-content: flex-end;
+        }
+
+        .history-item-platforms span {
+            padding: 2px 8px;
+            background: var(--dark-card);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
     </style>
 </head>
@@ -1425,7 +952,7 @@
                         <label>密碼</label>
                         <input type="password" id="loginPassword" placeholder="請輸入密碼" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">登入系統</button>
+                    <button type="submit" class="btn btn-primary btn-full">登入系統</button>
                 </form>
             </div>
         </div>
@@ -1437,10 +964,22 @@
         <header class="header">
             <div class="header-logo">Sport<span>Press</span></div>
             <nav class="header-nav">
-                <button class="nav-btn active" data-page="create">產生新聞稿</button>
-                <button class="nav-btn" data-page="articles">我的稿件</button>
+                <button class="nav-btn active" data-page="create">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9"/>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                    </svg>
+                    產生貼文
+                </button>
+                <button class="nav-btn" data-page="history">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    發文紀錄
+                </button>
                 <button class="nav-btn" data-page="settings">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="3"/>
                         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                     </svg>
@@ -1448,46 +987,29 @@
                 </button>
             </nav>
             <div class="header-user">
-                <span class="user-name" id="userName">王小明</span>
-                <div class="user-avatar" id="userAvatar">王</div>
+                <span class="user-name" id="userName">使用者</span>
+                <div class="user-avatar" id="userAvatar">U</div>
                 <button class="btn btn-ghost" id="logoutBtn">登出</button>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Create News Section -->
+            <!-- Create Post Section -->
             <section class="page-section active" id="pageCreate">
-                <!-- Step Indicator -->
-                <div class="step-indicator">
-                    <div class="step active" data-step="1">
-                        <div class="step-number">1</div>
-                        <span class="step-label">選擇球員</span>
-                    </div>
-                    <div class="step-divider"></div>
-                    <div class="step" data-step="2">
-                        <div class="step-number">2</div>
-                        <span class="step-label">編輯新聞稿</span>
-                    </div>
-                    <div class="step-divider"></div>
-                    <div class="step" data-step="3">
-                        <div class="step-number">3</div>
-                        <span class="step-label">預覽發布</span>
-                    </div>
-                </div>
-
-                <!-- Step 1: Select Player -->
-                <div class="step-content" id="step1">
-                    <div class="card">
-                        <h3 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="7" r="4"/>
-                                <path d="M5.5 21a8.5 8.5 0 0 1 13 0"/>
-                            </svg>
-                            選擇球員
-                        </h3>
-                        <div class="select-row">
-                            <div class="select-group">
+                <div class="two-column">
+                    <!-- Left: Input -->
+                    <div class="input-section">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                                輸入球員資料
+                            </h3>
+                            
+                            <div class="form-group">
                                 <label>運動類型</label>
                                 <select id="sportType">
                                     <option value="">請選擇</option>
@@ -1495,796 +1017,332 @@
                                     <option value="basketball">籃球</option>
                                 </select>
                             </div>
-                            <div class="select-group" id="positionGroup" style="display: none;">
+
+                            <div class="form-group" id="positionGroup" style="display: none;">
                                 <label>位置</label>
                                 <select id="position">
                                     <option value="">請選擇</option>
                                 </select>
                             </div>
-                            <div class="select-group">
+
+                            <div class="form-group">
                                 <label>球員名字</label>
-                                <input type="text" id="playerName" placeholder="輸入球員名字">
+                                <input type="text" id="playerName" placeholder="例如：林安可">
                             </div>
-                        </div>
-                        <button class="btn btn-primary" id="searchPlayerBtn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"/>
-                                <path d="m21 21-4.35-4.35"/>
-                            </svg>
-                            查詢數據
-                        </button>
 
-                        <!-- Loading -->
-                        <div class="loading" id="loadingStats">
-                            <div class="spinner"></div>
-                            <span>正在查詢球員數據...</span>
-                        </div>
-
-                        <!-- Player Stats -->
-                        <div class="player-stats" id="playerStats">
-                            <div class="player-header">
-                                <div class="player-avatar" id="playerInitial">林</div>
-                                <div class="player-info">
-                                    <h3 id="playerDisplayName">林安可</h3>
-                                    <p id="playerPosition">野手</p>
-                                    <span class="team-badge" id="playerTeam">統一獅</span>
+                            <div class="form-group">
+                                <label>文章長度</label>
+                                <div class="option-buttons" id="lengthOptions">
+                                    <button type="button" class="option-btn" data-value="short">短（50-100字）</button>
+                                    <button type="button" class="option-btn active" data-value="medium">中（150-250字）</button>
+                                    <button type="button" class="option-btn" data-value="long">長（300-500字）</button>
                                 </div>
                             </div>
-                            <div class="stats-grid" id="statsGrid">
-                                <!-- Stats will be populated dynamically -->
-                            </div>
-                            <div class="action-row">
-                                <button class="btn btn-secondary btn-icon" id="searchNewsBtn">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-                                        <path d="M18 14h-8"/>
-                                        <path d="M15 18h-5"/>
-                                        <path d="M10 6h8v4h-8V6Z"/>
-                                    </svg>
-                                    搜尋相關新聞
-                                </button>
-                                <button class="btn btn-primary btn-icon" id="generateNewsBtn">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.636 5.636l2.122 2.122m8.484 8.484 2.122 2.122M5.636 18.364l2.122-2.122m8.484-8.484 2.122-2.122"/>
-                                    </svg>
-                                    產生新聞稿
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Step 2: Edit News -->
-                <div class="step-content" id="step2" style="display: none;">
-                    <div class="editor-container">
-                        <div class="editor-main">
-                            <div class="card">
-                                <h3 class="card-title">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 20h9"/>
-                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                                    </svg>
-                                    編輯新聞稿
-                                </h3>
-                                <textarea id="newsContent" placeholder="新聞稿內容..."></textarea>
-                                <div class="char-count"><span id="charCount">0</span> 字</div>
-                                <div class="action-row">
-                                    <button class="btn btn-ghost" id="backToStep1">← 返回選擇球員</button>
-                                    <button class="btn btn-secondary" id="regenerateBtn">重新產生</button>
-                                    <button class="btn btn-secondary" id="saveDraftBtn">儲存草稿</button>
-                                    <button class="btn btn-primary" id="toPreviewBtn">下一步：預覽發布 →</button>
+                            <div class="form-group">
+                                <label>貼文風格</label>
+                                <div class="option-buttons style-options" id="styleOptions">
+                                    <button type="button" class="option-btn active" data-value="professional">📰 專業正式</button>
+                                    <button type="button" class="option-btn" data-value="excited">🔥 熱血激昂</button>
+                                    <button type="button" class="option-btn" data-value="humorous">😄 幽默風趣</button>
+                                    <button type="button" class="option-btn" data-value="analytical">📊 數據分析</button>
+                                    <button type="button" class="option-btn" data-value="storytelling">📖 故事敘述</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="editor-sidebar">
-                            <div class="card">
-                                <h3 class="card-title">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-                                    </svg>
-                                    相關新聞參考
-                                </h3>
-                                <div id="newsReferences">
-                                    <!-- Loading -->
-                                    <div class="loading active" id="loadingNews">
-                                        <div class="spinner"></div>
-                                        <span>搜尋中...</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Step 3: Preview & Publish -->
-                <div class="step-content" id="step3" style="display: none;">
-                    <div class="card">
-                        <h3 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                            最終預覽
-                        </h3>
-                        <div class="publish-preview">
-                            <div class="preview-label">新聞稿內容</div>
-                            <div class="preview-content" id="previewContent">
-                                <!-- Content will be populated -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="card-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                                <polyline points="16 6 12 2 8 6"/>
-                                <line x1="12" y1="2" x2="12" y2="15"/>
-                            </svg>
-                            選擇發布平台
-                        </h3>
-                        <div class="platform-select">
-                            <div class="platform-option">
-                                <input type="checkbox" id="platformThreads" value="threads">
-                                <label for="platformThreads">
-                                    <div class="platform-icon threads">@</div>
-                                    <span class="platform-name">Threads</span>
-                                    <div class="checkbox-custom">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
-                                            <polyline points="20 6 9 17 4 12"/>
-                                        </svg>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="platform-option">
-                                <input type="checkbox" id="platformFacebook" value="facebook">
-                                <label for="platformFacebook">
-                                    <div class="platform-icon facebook">f</div>
-                                    <span class="platform-name">Facebook</span>
-                                    <div class="checkbox-custom">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
-                                            <polyline points="20 6 9 17 4 12"/>
-                                        </svg>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="platform-option">
-                                <input type="checkbox" id="platformInstagram" value="instagram">
-                                <label for="platformInstagram">
-                                    <div class="platform-icon instagram">IG</div>
-                                    <span class="platform-name">Instagram</span>
-                                    <div class="checkbox-custom">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
-                                            <polyline points="20 6 9 17 4 12"/>
-                                        </svg>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="action-row" style="margin-top: 32px;">
-                            <button class="btn btn-ghost" id="backToStep2">← 返回編輯</button>
-                            <button class="btn btn-primary btn-icon" id="publishBtn">
+                            <button class="btn btn-primary btn-full" id="generateBtn">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 2 11 13"/>
-                                    <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                                 </svg>
-                                確認發布
+                                產生社群貼文
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Draft -->
+                    <div class="draft-section">
+                        <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+                            <div class="draft-header">
+                                <h3 class="card-title" style="margin-bottom: 0;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                        <line x1="16" y1="13" x2="8" y2="13"/>
+                                        <line x1="16" y1="17" x2="8" y2="17"/>
+                                    </svg>
+                                    貼文草稿
+                                </h3>
+                                <div class="draft-status" id="draftStatus">
+                                    <span class="draft-status-dot"></span>
+                                    <span>等待產生</span>
+                                </div>
+                            </div>
+
+                            <textarea class="draft-textarea" id="draftContent" placeholder="輸入球員名字後，點擊「產生社群貼文」，AI 會自動產生貼文內容...&#10;&#10;你可以在這裡編輯修改內容。" disabled></textarea>
+                            <div class="char-count"><span id="charCount">0</span> 字</div>
+
+                            <!-- Platform Selection -->
+                            <div class="platform-selection">
+                                <h4>選擇發布平台</h4>
+                                <div class="platform-checkboxes">
+                                    <label class="platform-checkbox" data-platform="threads">
+                                        <input type="checkbox" value="threads">
+                                        <div class="platform-icon threads">@</div>
+                                        <span>Threads</span>
+                                        <div class="check-icon">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                                                <polyline points="20 6 9 17 4 12"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                    <label class="platform-checkbox" data-platform="facebook">
+                                        <input type="checkbox" value="facebook">
+                                        <div class="platform-icon facebook">f</div>
+                                        <span>Facebook</span>
+                                        <div class="check-icon">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                                                <polyline points="20 6 9 17 4 12"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                    <label class="platform-checkbox" data-platform="instagram">
+                                        <input type="checkbox" value="instagram">
+                                        <div class="platform-icon instagram">IG</div>
+                                        <span>Instagram</span>
+                                        <div class="check-icon">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                                                <polyline points="20 6 9 17 4 12"/>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" id="clearBtn">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 6h18"/>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                    清除
+                                </button>
+                                <button class="btn btn-success" id="publishBtn" disabled>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 2 11 13"/>
+                                        <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                                    </svg>
+                                    發布貼文
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- My Articles Section -->
-            <section class="page-section" id="pageArticles">
-                <div class="articles-header">
-                    <h2>我的稿件</h2>
-                    <select class="filter-select" id="statusFilter">
-                        <option value="all">全部狀態</option>
-                        <option value="published">已發布</option>
-                        <option value="draft">草稿</option>
-                    </select>
-                </div>
+            <!-- History Section -->
+            <section class="page-section" id="pageHistory">
                 <div class="card">
-                    <table class="articles-table">
-                        <thead>
-                            <tr>
-                                <th>稿件 ID</th>
-                                <th>球員</th>
-                                <th>類型</th>
-                                <th>狀態</th>
-                                <th>發布平台</th>
-                                <th>建立時間</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="articlesTableBody">
-                            <tr>
-                                <td>D003</td>
-                                <td>林安可</td>
-                                <td>棒球 / 野手</td>
-                                <td><span class="status-badge published">已發布</span></td>
-                                <td>
-                                    <div class="platform-tags">
-                                        <span class="platform-tag">Threads</span>
-                                        <span class="platform-tag">FB</span>
-                                    </div>
-                                </td>
-                                <td>2025/01/20 14:30</td>
-                                <td><button class="btn btn-ghost">查看</button></td>
-                            </tr>
-                            <tr>
-                                <td>D002</td>
-                                <td>陳偉殷</td>
-                                <td>棒球 / 投手</td>
-                                <td><span class="status-badge draft">草稿</span></td>
-                                <td>-</td>
-                                <td>2025/01/19 10:00</td>
-                                <td><button class="btn btn-ghost">編輯</button></td>
-                            </tr>
-                            <tr>
-                                <td>D001</td>
-                                <td>陳盈駿</td>
-                                <td>籃球</td>
-                                <td><span class="status-badge published">已發布</span></td>
-                                <td>
-                                    <div class="platform-tags">
-                                        <span class="platform-tag">Threads</span>
-                                    </div>
-                                </td>
-                                <td>2025/01/18 20:00</td>
-                                <td><button class="btn btn-ghost">查看</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3 class="card-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        發文紀錄
+                    </h3>
+                    <div class="history-list" id="historyList">
+                        <!-- History items will be populated here -->
+                        <div class="history-item">
+                            <div class="history-item-info">
+                                <div class="history-item-avatar">林</div>
+                                <div class="history-item-details">
+                                    <h4>林安可</h4>
+                                    <p>棒球 / 野手</p>
+                                </div>
+                            </div>
+                            <div class="history-item-meta">
+                                <div class="history-item-date">2025/01/21 14:30</div>
+                                <div class="history-item-platforms">
+                                    <span>Threads</span>
+                                    <span>FB</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-item-info">
+                                <div class="history-item-avatar">陳</div>
+                                <div class="history-item-details">
+                                    <h4>陳盈駿</h4>
+                                    <p>籃球</p>
+                                </div>
+                            </div>
+                            <div class="history-item-meta">
+                                <div class="history-item-date">2025/01/20 18:00</div>
+                                <div class="history-item-platforms">
+                                    <span>Threads</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Settings Section -->
             <section class="page-section" id="pageSettings">
                 <div class="settings-container">
-                    <!-- Settings Navigation -->
-                    <nav class="settings-nav">
-                        <button class="settings-nav-item active" data-settings="webhooks">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    <h2 style="margin-bottom: 24px;">系統設定</h2>
+
+                    <!-- Webhook 1: Generate Post -->
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                             </svg>
-                            Webhook 設定
-                        </button>
-                        <button class="settings-nav-item" data-settings="api">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            Webhook 1：產生社群貼文
+                        </h3>
+                        <div class="setting-item">
+                            <label>Webhook URL</label>
+                            <div class="hint">輸入球員姓名 → 查 Google Sheet → Claude 產生貼文 → 回傳草稿</div>
+                            <div class="input-with-button">
+                                <input type="url" id="webhookGenerate" placeholder="https://hook.make.com/xxx...">
+                                <button class="btn-test" onclick="testWebhook('generate')">測試</button>
+                            </div>
+                            <div class="test-result" id="testResultGenerate"></div>
+                        </div>
+                    </div>
+
+                    <!-- Webhook 2: Publish -->
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2 11 13"/>
+                                <path d="m22 2-7 20-4-9-9-4 20-7z"/>
                             </svg>
-                            API 金鑰
-                        </button>
-                        <button class="settings-nav-item" data-settings="prompts">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            Webhook 2：發布貼文
+                        </h3>
+                        <div class="setting-item">
+                            <label>Webhook URL</label>
+                            <div class="hint">接收貼文內容 → 發布到 Facebook / Instagram / Threads</div>
+                            <div class="input-with-button">
+                                <input type="url" id="webhookPublish" placeholder="https://hook.make.com/xxx...">
+                                <button class="btn-test" onclick="testWebhook('publish')">測試</button>
+                            </div>
+                            <div class="test-result" id="testResultPublish"></div>
+                        </div>
+                    </div>
+
+                    <!-- Google Sheet -->
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                                <line x1="9" y1="21" x2="9" y2="9"/>
+                            </svg>
+                            Google Sheet 設定
+                        </h3>
+                        <div class="setting-item">
+                            <label>Google Sheet URL</label>
+                            <div class="hint">球員數據資料庫的 Google Sheet 連結</div>
+                            <input type="url" id="googleSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/xxx...">
+                        </div>
+                    </div>
+
+                    <!-- Prompt Template -->
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 20h9"/>
                                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
                             </svg>
-                            Prompt 模板
-                        </button>
-                        <button class="settings-nav-item" data-settings="platforms">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                                <polyline points="16 6 12 2 8 6"/>
-                                <line x1="12" y1="2" x2="12" y2="15"/>
+                            Prompt 基礎模板
+                        </h3>
+                        <div class="setting-item">
+                            <div class="hint" style="margin-bottom: 16px; padding: 12px; background: var(--dark); border-radius: 8px;">
+                                <strong>說明：</strong>這是基礎 Prompt，系統會自動加上「風格要求」和「字數要求」後一起送給 AI。
+                                <br><br>
+                                <strong>送出的完整 Prompt 結構：</strong><br>
+                                1. 基礎模板（下方設定）<br>
+                                2. 風格要求（根據選擇的風格自動加入）<br>
+                                3. 字數要求（根據選擇的長度自動加入）<br>
+                                4. 球員資料（從 Google Sheet 查詢）
+                            </div>
+                            <label>基礎 Prompt 模板</label>
+                            <textarea id="promptTemplate" rows="8">你是一位專業的體育社群小編。請根據以下球員資料，撰寫一篇適合社群媒體發布的貼文。
+
+要求：
+1. 開頭要吸引眼球，可用適當的 emoji
+2. 重點突出球員表現和數據
+3. 適合 Facebook / Instagram / Threads 發布
+4. 結尾加上相關的 hashtag</textarea>
+                        </div>
+                        <div class="setting-item">
+                            <label>預覽完整 Prompt（產生貼文時會送出）</label>
+                            <button class="btn btn-secondary" onclick="previewFullPrompt()" style="margin-top: 8px;">預覽完整 Prompt</button>
+                            <div id="promptPreview" style="display: none; margin-top: 12px; padding: 16px; background: var(--dark); border-radius: 8px; font-size: 0.85rem; white-space: pre-wrap; color: var(--text-muted); max-height: 300px; overflow-y: auto;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 風格設定說明 -->
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
                             </svg>
-                            發布平台
-                        </button>
-                        <button class="settings-nav-item" data-settings="sheets">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="3" y1="9" x2="21" y2="9"/>
-                                <line x1="3" y1="15" x2="21" y2="15"/>
-                                <line x1="9" y1="3" x2="9" y2="21"/>
-                            </svg>
-                            Google Sheet
-                        </button>
-                        <button class="settings-nav-item" data-settings="general">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"/>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                            </svg>
-                            一般設定
-                        </button>
-                    </nav>
-
-                    <!-- Settings Content -->
-                    <div class="settings-content">
-                        <!-- Webhooks Settings -->
-                        <div class="settings-section active" id="settingsWebhooks">
-                            <div class="settings-header">
-                                <h2>Webhook 設定</h2>
-                                <p>設定 Make.com 的 Webhook URL，讓系統可以與後端服務串接</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                                        <polyline points="10 17 15 12 10 7"/>
-                                        <line x1="15" y1="12" x2="3" y2="12"/>
-                                    </svg>
-                                    登入驗證
-                                </h3>
-                                <div class="setting-item">
-                                    <label>Login Webhook URL</label>
-                                    <div class="hint">用於驗證用戶帳號密碼</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookLogin" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('login')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultLogin"></div>
+                            風格與長度說明
+                        </h3>
+                        <div class="setting-item">
+                            <div style="display: grid; gap: 12px;">
+                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
+                                    <strong>📰 專業正式：</strong>用詞精準、客觀報導，適合主流媒體風格
                                 </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"/>
-                                        <path d="m21 21-4.35-4.35"/>
-                                    </svg>
-                                    資料查詢
-                                </h3>
-                                <div class="setting-item">
-                                    <label>查詢球員數據 Webhook URL</label>
-                                    <div class="hint">從 Google Sheet 撈取球員統計數據</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookSearchPlayer" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('searchPlayer')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultSearchPlayer"></div>
+                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
+                                    <strong>🔥 熱血激昂：</strong>充滿熱情與能量，強烈形容詞和感嘆句
                                 </div>
-                                <div class="setting-item">
-                                    <label>搜尋相關新聞 Webhook URL</label>
-                                    <div class="hint">呼叫 Perplexity API 搜尋最新新聞</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookSearchNews" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('searchNews')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultSearchNews"></div>
+                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
+                                    <strong>😄 幽默風趣：</strong>有趣比喻、網路用語、輕鬆調侃
                                 </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 20h9"/>
-                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                                    </svg>
-                                    內容產生
-                                </h3>
-                                <div class="setting-item">
-                                    <label>產生新聞稿 Webhook URL</label>
-                                    <div class="hint">呼叫 Claude API 產生新聞稿內容</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookGenerateNews" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('generateNews')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultGenerateNews"></div>
+                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
+                                    <strong>📊 數據分析：</strong>著重數據解讀、統計比較、趨勢分析
                                 </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                                        <polyline points="16 6 12 2 8 6"/>
-                                        <line x1="12" y1="2" x2="12" y2="15"/>
-                                    </svg>
-                                    儲存與發布
-                                </h3>
-                                <div class="setting-item">
-                                    <label>儲存稿件 Webhook URL</label>
-                                    <div class="hint">將稿件儲存到 Google Sheet</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookSaveArticle" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('saveArticle')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultSaveArticle"></div>
+                                <div style="padding: 12px; background: var(--dark); border-radius: 8px;">
+                                    <strong>📖 故事敘述：</strong>描繪比賽情境、球員心路歷程
                                 </div>
-                                <div class="setting-item">
-                                    <label>發布到社群 Webhook URL</label>
-                                    <div class="hint">發布新聞稿到 Threads、Facebook、Instagram</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookPublish" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('publish')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultPublish"></div>
-                                </div>
-                                <div class="setting-item">
-                                    <label>取得我的稿件 Webhook URL</label>
-                                    <div class="hint">從 Google Sheet 撈取用戶的稿件列表</div>
-                                    <div class="input-with-button">
-                                        <input type="url" id="webhookGetArticles" placeholder="https://hook.make.com/xxx...">
-                                        <button class="btn-test" onclick="testWebhook('getArticles')">測試連線</button>
-                                    </div>
-                                    <div class="test-result" id="testResultGetArticles"></div>
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('webhooks')">儲存設定</button>
-                                <button class="btn btn-secondary" onclick="testAllWebhooks()">測試所有連線</button>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- API Keys Settings -->
-                        <div class="settings-section" id="settingsApi">
-                            <div class="settings-header">
-                                <h2>API 金鑰設定</h2>
-                                <p>設定第三方服務的 API 金鑰（這些金鑰主要在 Make 端使用，這裡僅供參考記錄）</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                        <path d="M2 17l10 5 10-5"/>
-                                        <path d="M2 12l10 5 10-5"/>
-                                    </svg>
-                                    Claude API (Anthropic)
-                                </h3>
-                                <div class="setting-item">
-                                    <label>API Key</label>
-                                    <div class="hint">用於產生新聞稿內容，從 console.anthropic.com 取得</div>
-                                    <div class="api-key-input">
-                                        <input type="password" id="apiKeyClaude" placeholder="sk-ant-api...">
-                                        <button class="toggle-visibility" onclick="toggleApiKeyVisibility('apiKeyClaude')">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                                <circle cx="12" cy="12" r="3"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"/>
-                                        <path d="m21 21-4.35-4.35"/>
-                                    </svg>
-                                    Perplexity API
-                                </h3>
-                                <div class="setting-item">
-                                    <label>API Key</label>
-                                    <div class="hint">用於搜尋最新新聞，從 perplexity.ai 取得</div>
-                                    <div class="api-key-input">
-                                        <input type="password" id="apiKeyPerplexity" placeholder="pplx-...">
-                                        <button class="toggle-visibility" onclick="toggleApiKeyVisibility('apiKeyPerplexity')">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                                <circle cx="12" cy="12" r="3"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('api')">儲存設定</button>
-                            </div>
-                        </div>
-
-                        <!-- Prompt Templates Settings -->
-                        <div class="settings-section" id="settingsPrompts">
-                            <div class="settings-header">
-                                <h2>Prompt 模板設定</h2>
-                                <p>自訂 AI 產生新聞稿時使用的 Prompt，可使用變數標籤</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <line x1="12" y1="16" x2="12" y2="12"/>
-                                        <line x1="12" y1="8" x2="12.01" y2="8"/>
-                                    </svg>
-                                    可用變數
-                                </h3>
-                                <div class="variable-tags">
-                                    <span class="variable-tag" onclick="insertVariable('playerName')">{{playerName}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('team')">{{team}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('position')">{{position}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('sport')">{{sport}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('stats')">{{stats}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('relatedNews')">{{relatedNews}}</span>
-                                    <span class="variable-tag" onclick="insertVariable('date')">{{date}}</span>
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">棒球野手 Prompt</h3>
-                                <div class="setting-item">
-                                    <textarea id="promptBaseballFielder" rows="8">你是一位專業的體育新聞記者。請根據以下球員資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-位置：{{position}}
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述球員今日表現
-2. 引用具體數據
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。</textarea>
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">棒球投手 Prompt</h3>
-                                <div class="setting-item">
-                                    <textarea id="promptBaseballPitcher" rows="8">你是一位專業的體育新聞記者。請根據以下投手資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-位置：投手
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述投手今日投球表現
-2. 引用具體數據（局數、失分、三振等）
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。</textarea>
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">籃球 Prompt</h3>
-                                <div class="setting-item">
-                                    <textarea id="promptBasketball" rows="8">你是一位專業的體育新聞記者。請根據以下籃球員資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述球員今日比賽表現
-2. 引用具體數據（得分、籃板、助攻等）
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。</textarea>
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('prompts')">儲存設定</button>
-                                <button class="btn btn-secondary" onclick="resetPrompts()">重設為預設值</button>
-                            </div>
-                        </div>
-
-                        <!-- Platforms Settings -->
-                        <div class="settings-section" id="settingsPlatforms">
-                            <div class="settings-header">
-                                <h2>發布平台設定</h2>
-                                <p>設定社群平台的發布選項（實際帳號連結在 Make.com 設定）</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                                    </svg>
-                                    平台狀態
-                                </h3>
-                                <div class="platform-config">
-                                    <div class="platform-config-card">
-                                        <div class="platform-config-header">
-                                            <div class="platform-icon threads">@</div>
-                                            <h4>Threads</h4>
-                                            <span class="status connected">已連結</span>
-                                        </div>
-                                        <div class="toggle-setting">
-                                            <div class="toggle-info">
-                                                <h4>啟用 Threads 發布</h4>
-                                                <p>允許將新聞稿發布到 Threads</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" id="enableThreads" checked>
-                                                <span class="toggle-slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="platform-config-card">
-                                        <div class="platform-config-header">
-                                            <div class="platform-icon facebook">f</div>
-                                            <h4>Facebook</h4>
-                                            <span class="status connected">已連結</span>
-                                        </div>
-                                        <div class="toggle-setting">
-                                            <div class="toggle-info">
-                                                <h4>啟用 Facebook 發布</h4>
-                                                <p>允許將新聞稿發布到 Facebook 粉絲專頁</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" id="enableFacebook" checked>
-                                                <span class="toggle-slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="platform-config-card">
-                                        <div class="platform-config-header">
-                                            <div class="platform-icon instagram">IG</div>
-                                            <h4>Instagram</h4>
-                                            <span class="status disconnected">未連結</span>
-                                        </div>
-                                        <div class="toggle-setting">
-                                            <div class="toggle-info">
-                                                <h4>啟用 Instagram 發布</h4>
-                                                <p>允許將新聞稿發布到 Instagram（需搭配圖片）</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" id="enableInstagram">
-                                                <span class="toggle-slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('platforms')">儲存設定</button>
-                            </div>
-                        </div>
-
-                        <!-- Google Sheet Settings -->
-                        <div class="settings-section" id="settingsSheets">
-                            <div class="settings-header">
-                                <h2>Google Sheet 設定</h2>
-                                <p>設定 Google Sheet 的連結，用於儲存球員數據和稿件</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="3" y1="9" x2="21" y2="9"/>
-                                        <line x1="9" y1="21" x2="9" y2="9"/>
-                                    </svg>
-                                    試算表連結
-                                </h3>
-                                <div class="setting-item">
-                                    <label>Google Sheet URL</label>
-                                    <div class="hint">主要資料庫的 Google Sheet 連結</div>
-                                    <input type="url" id="googleSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/xxx...">
-                                </div>
-                                <div class="setting-item">
-                                    <label>Sheet ID</label>
-                                    <div class="hint">從 URL 中擷取的 Sheet ID（自動填入）</div>
-                                    <input type="text" id="googleSheetId" placeholder="會自動從 URL 擷取" readonly style="background: var(--dark-card);">
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">工作表名稱</h3>
-                                <div class="setting-item">
-                                    <label>棒球投手工作表</label>
-                                    <input type="text" id="sheetNamePitcher" value="棒球-投手" placeholder="棒球-投手">
-                                </div>
-                                <div class="setting-item">
-                                    <label>棒球野手工作表</label>
-                                    <input type="text" id="sheetNameFielder" value="棒球-野手" placeholder="棒球-野手">
-                                </div>
-                                <div class="setting-item">
-                                    <label>籃球工作表</label>
-                                    <input type="text" id="sheetNameBasketball" value="籃球" placeholder="籃球">
-                                </div>
-                                <div class="setting-item">
-                                    <label>帳號管理工作表</label>
-                                    <input type="text" id="sheetNameUsers" value="帳號管理" placeholder="帳號管理">
-                                </div>
-                                <div class="setting-item">
-                                    <label>稿件紀錄工作表</label>
-                                    <input type="text" id="sheetNameArticles" value="稿件紀錄" placeholder="稿件紀錄">
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('sheets')">儲存設定</button>
-                            </div>
-                        </div>
-
-                        <!-- General Settings -->
-                        <div class="settings-section" id="settingsGeneral">
-                            <div class="settings-header">
-                                <h2>一般設定</h2>
-                                <p>系統的一般選項設定</p>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">功能開關</h3>
-                                <div class="toggle-setting">
-                                    <div class="toggle-info">
-                                        <h4>自動搜尋相關新聞</h4>
-                                        <p>產生新聞稿時自動搜尋 Perplexity 相關新聞</p>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="autoSearchNews" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                                <div class="toggle-setting">
-                                    <div class="toggle-info">
-                                        <h4>發布前需確認</h4>
-                                        <p>發布前顯示確認對話框</p>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="confirmBeforePublish" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                                <div class="toggle-setting">
-                                    <div class="toggle-info">
-                                        <h4>儲存草稿時通知</h4>
-                                        <p>儲存草稿後顯示通知訊息</p>
-                                    </div>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" id="notifyOnSave" checked>
-                                        <span class="toggle-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="settings-group">
-                                <h3 class="settings-group-title">新聞稿設定</h3>
-                                <div class="setting-item">
-                                    <label>預設新聞稿字數</label>
-                                    <div class="hint">AI 產生新聞稿的目標字數</div>
-                                    <input type="text" id="defaultWordCount" value="300-500" placeholder="300-500">
-                                </div>
-                            </div>
-
-                            <div class="settings-actions">
-                                <button class="btn btn-primary" onclick="saveSettings('general')">儲存設定</button>
-                                <button class="btn btn-ghost" onclick="exportSettings()">匯出所有設定</button>
-                                <button class="btn btn-ghost" onclick="importSettings()">匯入設定</button>
-                            </div>
-                        </div>
+                    <div class="settings-actions">
+                        <button class="btn btn-primary" onclick="saveSettings()">儲存設定</button>
+                        <button class="btn btn-secondary" onclick="exportSettings()">匯出設定</button>
+                        <button class="btn btn-ghost" onclick="importSettings()">匯入設定</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">正在產生貼文...</div>
+    </div>
+
     <!-- Success Modal -->
     <div class="modal-overlay" id="successModal">
         <div class="modal">
-            <div class="modal-icon">
+            <div class="modal-icon success">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"/>
                 </svg>
             </div>
             <h2>發布成功！</h2>
-            <p>您的新聞稿已成功發布到以下平台</p>
+            <p>貼文已成功發布到以下平台</p>
             <div class="publish-results" id="publishResults">
                 <!-- Results will be populated -->
             </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="viewArticlesBtn">查看我的稿件</button>
-                <button class="btn btn-primary" id="continueCreateBtn">繼續產稿</button>
-            </div>
+            <button class="btn btn-primary" onclick="closeModal()">完成</button>
         </div>
     </div>
 
@@ -2297,46 +1355,53 @@
     </div>
 
     <script>
-        // App State
+        // ==================== State ====================
         const state = {
             currentUser: null,
-            currentStep: 1,
-            currentPage: 'create',
-            selectedPlayer: null,
-            newsContent: '',
-            relatedNews: []
+            draftContent: '',
+            selectedPlatforms: [],
+            selectedLength: 'medium',
+            selectedStyle: 'professional',
+            isGenerating: false,
+            isPublishing: false
         };
 
-        // DOM Elements
-        const loginScreen = document.getElementById('loginScreen');
-        const appContainer = document.getElementById('appContainer');
-        const loginForm = document.getElementById('loginForm');
+        // ==================== Length & Style Options ====================
+        const LENGTH_OPTIONS = {
+            short: { name: '短', words: '50-100字', description: '簡短有力，適合快速瀏覽' },
+            medium: { name: '中', words: '150-250字', description: '完整內容，適合一般發文' },
+            long: { name: '長', words: '300-500字', description: '深度報導，適合詳細分析' }
+        };
 
-        // Mock Data
-        const mockPlayers = {
-            baseball: {
-                pitcher: [
-                    { name: '陳偉殷', team: '統一獅', stats: { wins: 8, losses: 3, era: '2.85', whip: '1.12', k: 98, ip: '120.1' } },
-                    { name: '王維中', team: '樂天桃猿', stats: { wins: 6, losses: 5, era: '3.42', whip: '1.25', k: 76, ip: '95.0' } }
-                ],
-                fielder: [
-                    { name: '林安可', team: '統一獅', stats: { avg: '.325', hr: 18, rbi: 67, hits: 112, sb: 8, ops: '.912' } },
-                    { name: '林立', team: '中信兄弟', stats: { avg: '.298', hr: 22, rbi: 78, hits: 98, sb: 3, ops: '.885' } }
-                ]
+        const STYLE_OPTIONS = {
+            professional: { 
+                name: '專業正式', 
+                emoji: '📰',
+                prompt: '請以專業正式的體育新聞風格撰寫，用詞精準、客觀報導，適合主流媒體發布。'
             },
-            basketball: [
-                { name: '陳盈駿', team: '新北國王', stats: { pts: 18.5, reb: 3.2, ast: 8.7, stl: 1.8, blk: 0.2, fgp: '45.2%' } },
-                { name: '劉錚', team: '高雄鋼鐵人', stats: { pts: 15.3, reb: 6.8, ast: 2.1, stl: 1.2, blk: 0.5, fgp: '48.7%' } }
-            ]
+            excited: { 
+                name: '熱血激昂', 
+                emoji: '🔥',
+                prompt: '請以熱血激昂的風格撰寫，充滿熱情與能量，使用強烈的形容詞和感嘆句，讓讀者感受比賽的激情。'
+            },
+            humorous: { 
+                name: '幽默風趣', 
+                emoji: '😄',
+                prompt: '請以幽默風趣的風格撰寫，適當加入有趣的比喻、網路用語或輕鬆的調侃，讓讀者會心一笑。'
+            },
+            analytical: { 
+                name: '數據分析', 
+                emoji: '📊',
+                prompt: '請以數據分析的風格撰寫，著重於數據解讀、統計比較和趨勢分析，用數字說話。'
+            },
+            storytelling: { 
+                name: '故事敘述', 
+                emoji: '📖',
+                prompt: '請以故事敘述的風格撰寫，描繪比賽情境、球員心路歷程，讓讀者有身歷其境的感覺。'
+            }
         };
 
-        const mockNews = [
-            { title: '林安可本季第18轟 助獅隊主場獲勝', summary: '統一獅今日在主場迎戰樂天桃猿，林安可在五局敲出一發三分砲，幫助球隊以6:3獲勝...', source: '自由體育' },
-            { title: '統一獅連勝 林安可打點王持續領先', summary: '統一獅近期狀況火燙，已取得五連勝，林安可本季累計67分打點，持續領先全聯盟...', source: 'ETtoday運動雲' },
-            { title: '林安可專訪：保持專注是打擊關鍵', summary: '面對記者訪問，林安可表示每一個打席都保持專注，不去想太多數據上的事情...', source: '中央社' }
-        ];
-
-        // 50 組預設帳號
+        // ==================== 50 Users ====================
         const DEFAULT_USERS = [
             { id: 'U001', username: 'reporter01', password: 'sp2025r01', name: '記者01' },
             { id: 'U002', username: 'reporter02', password: 'sp2025r02', name: '記者02' },
@@ -2391,77 +1456,67 @@
             { id: 'U099', username: 'admin', password: 'admin2025!', name: '管理員' }
         ];
 
-        // Login Handler
-        loginForm.addEventListener('submit', async (e) => {
+        // ==================== Settings ====================
+        let SETTINGS = {
+            webhookGenerate: '',
+            webhookPublish: '',
+            googleSheetUrl: '',
+            promptTemplate: ''
+        };
+
+        // ==================== DOM Elements ====================
+        const loginScreen = document.getElementById('loginScreen');
+        const appContainer = document.getElementById('appContainer');
+        const loginForm = document.getElementById('loginForm');
+        const draftContent = document.getElementById('draftContent');
+        const draftStatus = document.getElementById('draftStatus');
+        const publishBtn = document.getElementById('publishBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+
+        // ==================== Init ====================
+        loadSettings();
+
+        // ==================== Login ====================
+        loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
 
-            // 先嘗試本地驗證（如果沒設定 webhook）
-            const localUser = DEFAULT_USERS.find(u => u.username === username && u.password === password);
+            const user = DEFAULT_USERS.find(u => u.username === username && u.password === password);
             
-            if (WEBHOOKS.login) {
-                // 如果有設定 webhook，使用 webhook 驗證
-                showToast('驗證中...');
-                const result = await callWebhook('login', { username, password });
-                
-                if (result && result.success) {
-                    state.currentUser = {
-                        id: result.user_id,
-                        username: username,
-                        name: result.name
-                    };
-                    completeLogin();
-                } else {
-                    showToast(result?.message || '帳號或密碼錯誤', 'error');
-                }
-            } else if (localUser) {
-                // 本地驗證成功
-                state.currentUser = {
-                    id: localUser.id,
-                    username: localUser.username,
-                    name: localUser.name
-                };
-                completeLogin();
+            if (user) {
+                state.currentUser = user;
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userAvatar').textContent = user.name.slice(-2, -1) || user.name[0];
+                loginScreen.style.display = 'none';
+                appContainer.classList.add('active');
+                showToast(`歡迎 ${user.name}！`);
             } else {
                 showToast('帳號或密碼錯誤', 'error');
             }
         });
 
-        function completeLogin() {
-            document.getElementById('userName').textContent = state.currentUser.name;
-            document.getElementById('userAvatar').textContent = state.currentUser.name.charAt(state.currentUser.name.length - 2) || state.currentUser.name.charAt(0);
-            
-            loginScreen.style.display = 'none';
-            appContainer.classList.add('active');
-            showToast(`登入成功！歡迎 ${state.currentUser.name}`);
-        }
-
-        // Logout Handler
         document.getElementById('logoutBtn').addEventListener('click', () => {
             state.currentUser = null;
             appContainer.classList.remove('active');
             loginScreen.style.display = 'flex';
             loginForm.reset();
+            clearDraft();
         });
 
-        // Navigation
+        // ==================== Navigation ====================
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
                 const page = btn.dataset.page;
-                state.currentPage = page;
-
-                document.querySelectorAll('.page-section').forEach(section => {
-                    section.classList.remove('active');
-                });
+                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
                 document.getElementById(`page${page.charAt(0).toUpperCase() + page.slice(1)}`).classList.add('active');
             });
         });
 
-        // Sport Type Change
+        // ==================== Sport Type Change ====================
         document.getElementById('sportType').addEventListener('change', (e) => {
             const positionGroup = document.getElementById('positionGroup');
             const positionSelect = document.getElementById('position');
@@ -2473,421 +1528,444 @@
                     <option value="pitcher">投手</option>
                     <option value="fielder">野手</option>
                 `;
-            } else if (e.target.value === 'basketball') {
-                positionGroup.style.display = 'none';
             } else {
                 positionGroup.style.display = 'none';
             }
         });
 
-        // Search Player
-        document.getElementById('searchPlayerBtn').addEventListener('click', () => {
+        // ==================== Length & Style Selection ====================
+        document.querySelectorAll('#lengthOptions .option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#lengthOptions .option-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.selectedLength = btn.dataset.value;
+            });
+        });
+
+        document.querySelectorAll('#styleOptions .option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#styleOptions .option-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.selectedStyle = btn.dataset.value;
+            });
+        });
+
+        // ==================== Build Prompt ====================
+        function buildPrompt(playerName, sport, position, stats, length, style) {
+            const lengthInfo = LENGTH_OPTIONS[length];
+            const styleInfo = STYLE_OPTIONS[style];
+            
+            // 取得使用者自訂的 Prompt 模板
+            const baseTemplate = SETTINGS.promptTemplate || getDefaultPromptTemplate();
+            
+            // 組合完整 Prompt
+            const fullPrompt = `${baseTemplate}
+
+【風格要求】
+${styleInfo.prompt}
+
+【字數要求】
+請將貼文控制在 ${lengthInfo.words}，${lengthInfo.description}。
+
+【球員資料】
+球員：${playerName}
+運動：${sport === 'baseball' ? '棒球' : '籃球'}
+${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
+數據：${stats || '請從資料庫查詢'}
+`;
+            return fullPrompt;
+        }
+
+        function getDefaultPromptTemplate() {
+            return `你是一位專業的體育社群小編。請根據以下球員資料，撰寫一篇適合社群媒體發布的貼文。
+
+要求：
+1. 開頭要吸引眼球，可用適當的 emoji
+2. 重點突出球員表現和數據
+3. 適合 Facebook / Instagram / Threads 發布
+4. 結尾加上相關的 hashtag`;
+        }
+
+        // ==================== Generate Post ====================
+        document.getElementById('generateBtn').addEventListener('click', async () => {
             const sportType = document.getElementById('sportType').value;
             const position = document.getElementById('position').value;
-            const playerName = document.getElementById('playerName').value;
+            const playerName = document.getElementById('playerName').value.trim();
 
-            if (!sportType || !playerName) {
-                showToast('請選擇運動類型並輸入球員名字', 'error');
+            if (!sportType) {
+                showToast('請選擇運動類型', 'error');
+                return;
+            }
+            if (!playerName) {
+                showToast('請輸入球員名字', 'error');
+                return;
+            }
+            if (sportType === 'baseball' && !position) {
+                showToast('請選擇位置', 'error');
                 return;
             }
 
             // Show loading
-            document.getElementById('loadingStats').classList.add('active');
-            document.getElementById('playerStats').classList.remove('visible');
+            showLoading('正在產生貼文...');
 
-            // Simulate API call
-            setTimeout(() => {
-                document.getElementById('loadingStats').classList.remove('active');
+            // Build the prompt
+            const prompt = buildPrompt(
+                playerName, 
+                sportType, 
+                position, 
+                null, // stats will be fetched by Make
+                state.selectedLength, 
+                state.selectedStyle
+            );
 
-                // Find player in mock data
-                let player;
-                if (sportType === 'baseball') {
-                    const players = position ? mockPlayers.baseball[position] : [...mockPlayers.baseball.pitcher, ...mockPlayers.baseball.fielder];
-                    player = players.find(p => p.name.includes(playerName)) || players[0];
-                    state.selectedPlayer = { ...player, sport: 'baseball', position: position || 'fielder' };
-                } else {
-                    player = mockPlayers.basketball.find(p => p.name.includes(playerName)) || mockPlayers.basketball[0];
-                    state.selectedPlayer = { ...player, sport: 'basketball', position: '' };
+            // Prepare data - 包含所有選項和 Prompt
+            const data = {
+                // 基本資料
+                sport: sportType,
+                position: position || '',
+                playerName: playerName,
+                userId: state.currentUser?.id || 'guest',
+                
+                // 選項
+                length: state.selectedLength,
+                lengthDescription: LENGTH_OPTIONS[state.selectedLength].words,
+                style: state.selectedStyle,
+                styleDescription: STYLE_OPTIONS[state.selectedStyle].name,
+                stylePrompt: STYLE_OPTIONS[state.selectedStyle].prompt,
+                
+                // 完整 Prompt
+                prompt: prompt
+            };
+
+            console.log('Sending to webhook:', data);
+
+            // Call webhook or use mock
+            if (SETTINGS.webhookGenerate) {
+                try {
+                    const response = await fetch(SETTINGS.webhookGenerate, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    
+                    hideLoading();
+                    
+                    if (result.content) {
+                        setDraft(result.content);
+                    } else {
+                        showToast('產生失敗，請檢查 Webhook 設定', 'error');
+                    }
+                } catch (error) {
+                    hideLoading();
+                    console.error(error);
+                    showToast('連線失敗', 'error');
                 }
-
-                // Update UI
-                document.getElementById('playerInitial').textContent = player.name.charAt(0);
-                document.getElementById('playerDisplayName').textContent = player.name;
-                document.getElementById('playerPosition').textContent = sportType === 'baseball' ? (position === 'pitcher' ? '投手' : '野手') : '籃球';
-                document.getElementById('playerTeam').textContent = player.team;
-
-                // Update stats grid
-                const statsGrid = document.getElementById('statsGrid');
-                statsGrid.innerHTML = '';
-
-                const statsLabels = sportType === 'baseball' ?
-                    (position === 'pitcher' ?
-                        { wins: '勝', losses: '敗', era: 'ERA', whip: 'WHIP', k: '三振', ip: '局數' } :
-                        { avg: '打擊率', hr: '全壘打', rbi: '打點', hits: '安打', sb: '盜壘', ops: 'OPS' }) :
-                    { pts: '得分', reb: '籃板', ast: '助攻', stl: '抄截', blk: '阻攻', fgp: '命中率' };
-
-                Object.entries(player.stats).forEach(([key, value]) => {
-                    const div = document.createElement('div');
-                    div.className = 'stat-item';
-                    div.innerHTML = `
-                        <div class="stat-value">${value}</div>
-                        <div class="stat-label">${statsLabels[key]}</div>
-                    `;
-                    statsGrid.appendChild(div);
-                });
-
-                document.getElementById('playerStats').classList.add('visible');
-            }, 1000);
+            } else {
+                // Mock response
+                setTimeout(() => {
+                    hideLoading();
+                    const mockContent = generateMockPost(playerName, sportType, position, state.selectedLength, state.selectedStyle);
+                    setDraft(mockContent);
+                }, 1500);
+            }
         });
 
-        // Search News
-        document.getElementById('searchNewsBtn').addEventListener('click', () => {
-            showToast('正在搜尋相關新聞...');
-            // In real app, call Perplexity API via Make
-            state.relatedNews = mockNews;
-        });
+        function generateMockPost(name, sport, position, length, style) {
+            const styleEmoji = STYLE_OPTIONS[style].emoji;
+            
+            // 根據長度決定內容
+            let content = '';
+            
+            if (sport === 'baseball') {
+                if (position === 'pitcher') {
+                    if (length === 'short') {
+                        content = `${styleEmoji} ${name} 今日先發好投！主投6局失2分、K7，率隊奪勝 💪\n\n#CPBL #${name}`;
+                    } else if (length === 'long') {
+                        content = `${styleEmoji} ${name} 強勢登板，展現王牌氣勢！
 
-        // Generate News
-        document.getElementById('generateNewsBtn').addEventListener('click', () => {
-            if (!state.selectedPlayer) {
-                showToast('請先查詢球員數據', 'error');
-                return;
+今日在主場面對強敵，${name} 繳出精彩的先發表現。從第一局開始就展現絕佳的控球能力，速球穩定維持在 145 公里以上，變化球更是讓打者頻頻揮空。
+
+📊 完整數據：
+• 主投 6.0 局
+• 僅失 2 分（自責分 2）
+• 三振 7 次
+• 保送 2 次  
+• WHIP 1.05
+
+關鍵的第五局，面對滿壘危機，${name} 展現大將之風，連續三振化解險境，全場球迷沸騰！
+
+總教練賽後表示：「他今天的表現非常穩定，這就是我們期待的王牌投手。」
+
+${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
+
+#CPBL #棒球 #${name} #投手 #好投`;
+                    } else {
+                        content = `${styleEmoji} ${name} 今日先發表現亮眼！
+
+📊 主投 6 局僅失 2 分
+📊 三振 7 人、WHIP 1.05
+📊 球速維持 145km/h 以上
+
+關鍵時刻展現壓制力，幫助球隊拿下重要勝利！下一場比賽值得期待 💪
+
+#CPBL #棒球 #${name} #投手`;
+                    }
+                } else {
+                    if (length === 'short') {
+                        content = `${styleEmoji} ${name} 開轟啦！4打數3安、1轟3打點，持續火燙 🔥\n\n#CPBL #${name}`;
+                    } else if (length === 'long') {
+                        content = `${styleEmoji} ${name} 今日火力全開，率隊大勝！
+
+主場迎戰的比賽中，${name} 用球棒證明自己是聯盟最可怕的打者之一。從首打席開始就展現絕佳手感，將球扎實擊出形成安打。
+
+📊 今日完整數據：
+• 4 打數 3 安打
+• 1 發全壘打（本季第 18 轟）
+• 3 分打點
+• 打擊率提升至 .325
+
+五局下半，${name} 面對對方強投，抓住紅中速球，一棒掃向左外野全壘打牆，三分彈徹底打爆比賽！全場球迷起立鼓掌。
+
+「今天狀況很好，就是專注在每一個打席。」${name} 賽後謙虛表示。
+
+本季 ${name} 持續穩定輸出，是球隊打線的核心支柱，季後賽可望扮演關鍵角色！
+
+#CPBL #棒球 #${name} #全壘打 #打擊王`;
+                    } else {
+                        content = `${styleEmoji} ${name} 今日開轟！
+
+🔥 打擊表現超火燙
+📊 4 打數 3 安打
+📊 1 發全壘打、3 分打點
+📊 本季打擊率 .325
+
+關鍵時刻的可靠打者，持續用表現證明自己！👊
+
+#CPBL #棒球 #${name} #全壘打`;
+                    }
+                }
+            } else {
+                if (length === 'short') {
+                    content = `${styleEmoji} ${name} 22分8籃板6助攻，主宰比賽！MVP級表現 🏆\n\n#PLG #${name}`;
+                } else if (length === 'long') {
+                    content = `${styleEmoji} ${name} 今晚主宰全場，帶領球隊拿下關鍵勝利！
+
+面對同區勁敵的強碰，${name} 從開賽就展現侵略性，頻頻切入禁區取分，外線手感也十分火燙。
+
+📊 今晚完整數據：
+• 得分：22 分
+• 籃板：8 個
+• 助攻：6 次
+• 投籃命中率：52%
+• 三分球：4/7
+
+第四節關鍵時刻，${name} 連續兩次急停跳投命中，幫助球隊拉開比分差距。最後兩分鐘更是親自操刀控場，穩穩守住勝利。
+
+「今天團隊防守做得很好，大家都很拚。」${name} 將功勞歸給隊友。
+
+總教練賽後盛讚：「他就是我們的領袖，關鍵時刻總是挺身而出。」
+
+#PLG #籃球 #${name} #MVP`;
+                } else {
+                    content = `${styleEmoji} ${name} 主宰比賽！
+
+今日數據超亮眼 🔥
+📊 22 分 8 籃板 6 助攻
+📊 命中率 52%
+📊 三分球 4/7
+
+關鍵時刻挺身而出，帶領球隊拿下勝利！MVP 級表現 🏆
+
+#PLG #籃球 #${name}`;
+                }
             }
 
-            showToast('正在產生新聞稿...');
+            // 根據風格微調
+            if (style === 'humorous') {
+                content = content.replace('！', '！（太扯了吧）');
+            } else if (style === 'excited') {
+                content = content.replace('！', '！！！🔥🔥🔥');
+            }
 
-            // Simulate API call
-            setTimeout(() => {
-                const player = state.selectedPlayer;
-                let newsContent = '';
-
-                if (player.sport === 'baseball' && player.position === 'fielder') {
-                    newsContent = `${player.name}今日在主場出賽，展現精湛打擊實力。本季至今，${player.name}繳出打擊率${player.stats.avg}的優異成績，並已累積${player.stats.hr}支全壘打、${player.stats.rbi}分打點，穩居球隊核心打線。
-
-面對今日的先發投手，${player.name}在首打席就敲出安打帶動攻勢，隨後更在關鍵時刻揮出適時打點，幫助${player.team}取得領先。
-
-總教練賽後表示，${player.name}本季的穩定表現是球隊戰績提升的重要因素，期待他能持續保持狀態，帶領球隊朝季後賽邁進。`;
-                } else if (player.sport === 'baseball' && player.position === 'pitcher') {
-                    newsContent = `${player.team}王牌投手${player.name}今日先發登板，繳出優質先發的精彩表現。本季${player.name}目前戰績${player.stats.wins}勝${player.stats.losses}敗，防禦率${player.stats.era}，展現穩定的投球內容。
-
-本場比賽${player.name}主投六局僅失兩分，三振${Math.floor(Math.random() * 5) + 4}名打者，用球數控制得宜。他的速球維持在145公里以上，搭配犀利的變化球，讓對手打線難以施展。
-
-賽後${player.name}表示，今天整體控球狀況不錯，感謝隊友的火力支援，接下來會繼續調整狀態，為球隊貢獻更多勝投。`;
-                } else {
-                    newsContent = `${player.team}後衛${player.name}今日攻下${Math.floor(Math.random() * 10) + 15}分、${Math.floor(Math.random() * 5) + 5}助攻，帶領球隊拿下重要勝利。本季${player.name}場均得分${player.stats.pts}分、${player.stats.ast}助攻，是球隊進攻端的重要發動機。
-
-面對對手的緊迫盯人，${player.name}展現老將經驗，在關鍵時刻頻頻送出精準傳球，串聯起全隊進攻。第四節最後兩分鐘，他更親自操刀連得5分，奠定勝基。
-
-總教練對${player.name}今日的表現讚譽有加，表示他在場上的領導能力是球隊不可或缺的重要資產。`;
-                }
-
-                state.newsContent = newsContent;
-                document.getElementById('newsContent').value = newsContent;
-                updateCharCount();
-                goToStep(2);
-
-                // Load related news
-                loadRelatedNews();
-            }, 1500);
-        });
-
-        // Load Related News
-        function loadRelatedNews() {
-            const container = document.getElementById('newsReferences');
-            container.innerHTML = '<div class="loading active"><div class="spinner"></div><span>搜尋中...</span></div>';
-
-            setTimeout(() => {
-                container.innerHTML = mockNews.map((news, index) => `
-                    <div class="news-reference">
-                        <h4>${news.title}</h4>
-                        <p>${news.summary}</p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="source">${news.source}</span>
-                            <button class="btn-quote" onclick="quoteNews(${index})">引用</button>
-                        </div>
-                    </div>
-                `).join('');
-            }, 1000);
+            return content;
         }
 
-        // Quote News
-        function quoteNews(index) {
-            const news = mockNews[index];
-            const textarea = document.getElementById('newsContent');
-            textarea.value += `\n\n根據${news.source}報導，${news.summary}`;
+        function setDraft(content) {
+            draftContent.value = content;
+            draftContent.disabled = false;
+            state.draftContent = content;
             updateCharCount();
-            showToast('已引用新聞');
+            updateDraftStatus(true);
+            publishBtn.disabled = false;
+            showToast('貼文已產生，可編輯後發布');
         }
 
-        // Update Character Count
-        function updateCharCount() {
-            const content = document.getElementById('newsContent').value;
-            document.getElementById('charCount').textContent = content.length;
-            state.newsContent = content;
+        function clearDraft() {
+            draftContent.value = '';
+            draftContent.disabled = true;
+            state.draftContent = '';
+            state.selectedPlatforms = [];
+            document.querySelectorAll('.platform-checkbox').forEach(cb => cb.classList.remove('selected'));
+            document.querySelectorAll('.platform-checkbox input').forEach(i => i.checked = false);
+            updateCharCount();
+            updateDraftStatus(false);
+            publishBtn.disabled = true;
         }
 
-        document.getElementById('newsContent').addEventListener('input', updateCharCount);
+        document.getElementById('clearBtn').addEventListener('click', clearDraft);
 
-        // Step Navigation
-        function goToStep(step) {
-            state.currentStep = step;
-
-            // Update step indicators
-            document.querySelectorAll('.step').forEach(s => {
-                const stepNum = parseInt(s.dataset.step);
-                s.classList.remove('active', 'completed');
-                if (stepNum < step) s.classList.add('completed');
-                if (stepNum === step) s.classList.add('active');
-            });
-
-            // Show/hide step content
-            document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
-            document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
-            document.getElementById('step3').style.display = step === 3 ? 'block' : 'none';
-
-            // Update preview content
-            if (step === 3) {
-                document.getElementById('previewContent').textContent = state.newsContent;
+        function updateDraftStatus(ready) {
+            if (ready) {
+                draftStatus.classList.add('ready');
+                draftStatus.innerHTML = '<span class="draft-status-dot"></span><span>可發布</span>';
+            } else {
+                draftStatus.classList.remove('ready');
+                draftStatus.innerHTML = '<span class="draft-status-dot"></span><span>等待產生</span>';
             }
         }
 
-        document.getElementById('backToStep1').addEventListener('click', () => goToStep(1));
-        document.getElementById('toPreviewBtn').addEventListener('click', () => {
-            if (!state.newsContent.trim()) {
-                showToast('請先輸入新聞稿內容', 'error');
+        // ==================== Draft Editor ====================
+        draftContent.addEventListener('input', () => {
+            state.draftContent = draftContent.value;
+            updateCharCount();
+        });
+
+        function updateCharCount() {
+            document.getElementById('charCount').textContent = draftContent.value.length;
+        }
+
+        // ==================== Platform Selection ====================
+        document.querySelectorAll('.platform-checkbox').forEach(cb => {
+            cb.addEventListener('click', () => {
+                const input = cb.querySelector('input');
+                input.checked = !input.checked;
+                cb.classList.toggle('selected', input.checked);
+                
+                state.selectedPlatforms = Array.from(document.querySelectorAll('.platform-checkbox input:checked'))
+                    .map(i => i.value);
+            });
+        });
+
+        // ==================== Publish ====================
+        document.getElementById('publishBtn').addEventListener('click', async () => {
+            const content = draftContent.value.trim();
+            
+            if (!content) {
+                showToast('請先產生貼文內容', 'error');
                 return;
             }
-            goToStep(3);
-        });
-        document.getElementById('backToStep2').addEventListener('click', () => goToStep(2));
 
-        // Regenerate News
-        document.getElementById('regenerateBtn').addEventListener('click', () => {
-            showToast('正在重新產生...');
-            document.getElementById('generateNewsBtn').click();
-        });
-
-        // Save Draft
-        document.getElementById('saveDraftBtn').addEventListener('click', () => {
-            showToast('草稿已儲存');
-        });
-
-        // Publish
-        document.getElementById('publishBtn').addEventListener('click', () => {
-            const platforms = [];
-            if (document.getElementById('platformThreads').checked) platforms.push('Threads');
-            if (document.getElementById('platformFacebook').checked) platforms.push('Facebook');
-            if (document.getElementById('platformInstagram').checked) platforms.push('Instagram');
-
-            if (platforms.length === 0) {
+            if (state.selectedPlatforms.length === 0) {
                 showToast('請至少選擇一個發布平台', 'error');
                 return;
             }
 
-            // Show loading
-            showToast('正在發布...');
+            showLoading('正在發布貼文...');
 
-            // Simulate publish
-            setTimeout(() => {
-                const resultsContainer = document.getElementById('publishResults');
-                resultsContainer.innerHTML = platforms.map(p => `
-                    <div class="publish-result-item">
-                        <svg class="result-status" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>${p}</span>
-                        <span style="margin-left: auto; color: var(--success);">已發布</span>
-                    </div>
-                `).join('');
+            const data = {
+                content: content,
+                platforms: state.selectedPlatforms,
+                userId: state.currentUser?.id || 'guest',
+                playerName: document.getElementById('playerName').value,
+                sport: document.getElementById('sportType').value
+            };
 
-                document.getElementById('successModal').classList.add('active');
-            }, 1500);
+            if (SETTINGS.webhookPublish) {
+                try {
+                    const response = await fetch(SETTINGS.webhookPublish, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    hideLoading();
+                    showSuccessModal(state.selectedPlatforms);
+                } catch (error) {
+                    hideLoading();
+                    showToast('發布失敗', 'error');
+                }
+            } else {
+                // Mock
+                setTimeout(() => {
+                    hideLoading();
+                    showSuccessModal(state.selectedPlatforms);
+                }, 1500);
+            }
         });
 
-        // Modal Actions
-        document.getElementById('viewArticlesBtn').addEventListener('click', () => {
+        // ==================== Modal ====================
+        function showSuccessModal(platforms) {
+            const resultsDiv = document.getElementById('publishResults');
+            resultsDiv.innerHTML = platforms.map(p => `
+                <div class="publish-result-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span>${p.charAt(0).toUpperCase() + p.slice(1)}</span>
+                    <span style="margin-left: auto; color: var(--success);">已發布</span>
+                </div>
+            `).join('');
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeModal() {
             document.getElementById('successModal').classList.remove('active');
-            document.querySelector('[data-page="articles"]').click();
-        });
+            clearDraft();
+            document.getElementById('playerName').value = '';
+            document.getElementById('sportType').value = '';
+            document.getElementById('positionGroup').style.display = 'none';
+        }
 
-        document.getElementById('continueCreateBtn').addEventListener('click', () => {
-            document.getElementById('successModal').classList.remove('active');
-            goToStep(1);
-            document.getElementById('playerStats').classList.remove('visible');
-            document.getElementById('newsContent').value = '';
-            state.newsContent = '';
-            state.selectedPlayer = null;
-        });
+        // ==================== Loading ====================
+        function showLoading(text) {
+            loadingText.textContent = text;
+            loadingOverlay.classList.add('active');
+        }
 
-        // Toast
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+        }
+
+        // ==================== Toast ====================
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toastMessage');
-
             toast.classList.remove('success', 'error');
             toast.classList.add(type);
             toastMessage.textContent = message;
             toast.classList.add('show');
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // ==================== Settings Functions ====================
-
-        // Settings Navigation
-        document.querySelectorAll('.settings-nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-
-                const settingsId = item.dataset.settings;
-                document.querySelectorAll('.settings-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                document.getElementById(`settings${settingsId.charAt(0).toUpperCase() + settingsId.slice(1)}`).classList.add('active');
-            });
-        });
-
-        // Load settings from localStorage
+        // ==================== Settings ====================
         function loadSettings() {
-            const settings = JSON.parse(localStorage.getItem('sportpress_settings') || '{}');
-
-            // Webhooks
-            if (settings.webhooks) {
-                document.getElementById('webhookLogin').value = settings.webhooks.login || '';
-                document.getElementById('webhookSearchPlayer').value = settings.webhooks.searchPlayer || '';
-                document.getElementById('webhookSearchNews').value = settings.webhooks.searchNews || '';
-                document.getElementById('webhookGenerateNews').value = settings.webhooks.generateNews || '';
-                document.getElementById('webhookSaveArticle').value = settings.webhooks.saveArticle || '';
-                document.getElementById('webhookPublish').value = settings.webhooks.publish || '';
-                document.getElementById('webhookGetArticles').value = settings.webhooks.getArticles || '';
-            }
-
-            // API Keys
-            if (settings.apiKeys) {
-                document.getElementById('apiKeyClaude').value = settings.apiKeys.claude || '';
-                document.getElementById('apiKeyPerplexity').value = settings.apiKeys.perplexity || '';
-            }
-
-            // Prompts
-            if (settings.prompts) {
-                if (settings.prompts.baseballFielder) {
-                    document.getElementById('promptBaseballFielder').value = settings.prompts.baseballFielder;
+            const saved = localStorage.getItem('sportpress_settings');
+            if (saved) {
+                SETTINGS = JSON.parse(saved);
+                document.getElementById('webhookGenerate').value = SETTINGS.webhookGenerate || '';
+                document.getElementById('webhookPublish').value = SETTINGS.webhookPublish || '';
+                document.getElementById('googleSheetUrl').value = SETTINGS.googleSheetUrl || '';
+                if (SETTINGS.promptTemplate) {
+                    document.getElementById('promptTemplate').value = SETTINGS.promptTemplate;
                 }
-                if (settings.prompts.baseballPitcher) {
-                    document.getElementById('promptBaseballPitcher').value = settings.prompts.baseballPitcher;
-                }
-                if (settings.prompts.basketball) {
-                    document.getElementById('promptBasketball').value = settings.prompts.basketball;
-                }
-            }
-
-            // Platforms
-            if (settings.platforms) {
-                document.getElementById('enableThreads').checked = settings.platforms.threads !== false;
-                document.getElementById('enableFacebook').checked = settings.platforms.facebook !== false;
-                document.getElementById('enableInstagram').checked = settings.platforms.instagram || false;
-            }
-
-            // Google Sheets
-            if (settings.sheets) {
-                document.getElementById('googleSheetUrl').value = settings.sheets.url || '';
-                document.getElementById('googleSheetId').value = settings.sheets.id || '';
-                document.getElementById('sheetNamePitcher').value = settings.sheets.pitcher || '棒球-投手';
-                document.getElementById('sheetNameFielder').value = settings.sheets.fielder || '棒球-野手';
-                document.getElementById('sheetNameBasketball').value = settings.sheets.basketball || '籃球';
-                document.getElementById('sheetNameUsers').value = settings.sheets.users || '帳號管理';
-                document.getElementById('sheetNameArticles').value = settings.sheets.articles || '稿件紀錄';
-            }
-
-            // General
-            if (settings.general) {
-                document.getElementById('autoSearchNews').checked = settings.general.autoSearchNews !== false;
-                document.getElementById('confirmBeforePublish').checked = settings.general.confirmBeforePublish !== false;
-                document.getElementById('notifyOnSave').checked = settings.general.notifyOnSave !== false;
-                document.getElementById('defaultWordCount').value = settings.general.wordCount || '300-500';
-            }
-
-            // Update global WEBHOOKS object
-            if (settings.webhooks) {
-                Object.assign(WEBHOOKS, settings.webhooks);
             }
         }
 
-        // Save settings to localStorage
-        function saveSettings(section) {
-            let settings = JSON.parse(localStorage.getItem('sportpress_settings') || '{}');
-
-            switch (section) {
-                case 'webhooks':
-                    settings.webhooks = {
-                        login: document.getElementById('webhookLogin').value,
-                        searchPlayer: document.getElementById('webhookSearchPlayer').value,
-                        searchNews: document.getElementById('webhookSearchNews').value,
-                        generateNews: document.getElementById('webhookGenerateNews').value,
-                        saveArticle: document.getElementById('webhookSaveArticle').value,
-                        publish: document.getElementById('webhookPublish').value,
-                        getArticles: document.getElementById('webhookGetArticles').value
-                    };
-                    // Update global WEBHOOKS object
-                    Object.assign(WEBHOOKS, settings.webhooks);
-                    break;
-
-                case 'api':
-                    settings.apiKeys = {
-                        claude: document.getElementById('apiKeyClaude').value,
-                        perplexity: document.getElementById('apiKeyPerplexity').value
-                    };
-                    break;
-
-                case 'prompts':
-                    settings.prompts = {
-                        baseballFielder: document.getElementById('promptBaseballFielder').value,
-                        baseballPitcher: document.getElementById('promptBaseballPitcher').value,
-                        basketball: document.getElementById('promptBasketball').value
-                    };
-                    break;
-
-                case 'platforms':
-                    settings.platforms = {
-                        threads: document.getElementById('enableThreads').checked,
-                        facebook: document.getElementById('enableFacebook').checked,
-                        instagram: document.getElementById('enableInstagram').checked
-                    };
-                    break;
-
-                case 'sheets':
-                    settings.sheets = {
-                        url: document.getElementById('googleSheetUrl').value,
-                        id: document.getElementById('googleSheetId').value,
-                        pitcher: document.getElementById('sheetNamePitcher').value,
-                        fielder: document.getElementById('sheetNameFielder').value,
-                        basketball: document.getElementById('sheetNameBasketball').value,
-                        users: document.getElementById('sheetNameUsers').value,
-                        articles: document.getElementById('sheetNameArticles').value
-                    };
-                    break;
-
-                case 'general':
-                    settings.general = {
-                        autoSearchNews: document.getElementById('autoSearchNews').checked,
-                        confirmBeforePublish: document.getElementById('confirmBeforePublish').checked,
-                        notifyOnSave: document.getElementById('notifyOnSave').checked,
-                        wordCount: document.getElementById('defaultWordCount').value
-                    };
-                    break;
-            }
-
-            localStorage.setItem('sportpress_settings', JSON.stringify(settings));
+        function saveSettings() {
+            SETTINGS = {
+                webhookGenerate: document.getElementById('webhookGenerate').value,
+                webhookPublish: document.getElementById('webhookPublish').value,
+                googleSheetUrl: document.getElementById('googleSheetUrl').value,
+                promptTemplate: document.getElementById('promptTemplate').value
+            };
+            localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
             showToast('設定已儲存');
         }
 
-        // Test Webhook
-        async function testWebhook(webhookName) {
-            const inputId = `webhook${webhookName.charAt(0).toUpperCase() + webhookName.slice(1)}`;
-            const resultId = `testResult${webhookName.charAt(0).toUpperCase() + webhookName.slice(1)}`;
+        async function testWebhook(type) {
+            const inputId = type === 'generate' ? 'webhookGenerate' : 'webhookPublish';
+            const resultId = type === 'generate' ? 'testResultGenerate' : 'testResultPublish';
             const url = document.getElementById(inputId).value;
             const resultEl = document.getElementById(resultId);
 
@@ -2907,9 +1985,9 @@
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ test: true, timestamp: new Date().toISOString() })
+                    body: JSON.stringify({ test: true })
                 });
-
+                
                 if (response.ok) {
                     resultEl.className = 'test-result success';
                     resultEl.textContent = '✓ 連線成功！';
@@ -2919,193 +1997,58 @@
                 }
             } catch (error) {
                 resultEl.className = 'test-result error';
-                resultEl.textContent = `✗ 連線錯誤: ${error.message}`;
+                resultEl.textContent = `✗ 連線錯誤`;
             }
         }
-
-        // Test All Webhooks
-        async function testAllWebhooks() {
-            const webhooks = ['Login', 'SearchPlayer', 'SearchNews', 'GenerateNews', 'SaveArticle', 'Publish', 'GetArticles'];
-            showToast('開始測試所有 Webhook...');
-
-            for (const name of webhooks) {
-                await testWebhook(name.charAt(0).toLowerCase() + name.slice(1));
-                await new Promise(r => setTimeout(r, 500));
-            }
-
-            showToast('所有 Webhook 測試完成');
-        }
-
-        // Toggle API Key Visibility
-        function toggleApiKeyVisibility(inputId) {
-            const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
-        // Insert Variable into Prompt
-        let activePromptTextarea = null;
-        document.querySelectorAll('#settingsPrompts textarea').forEach(textarea => {
-            textarea.addEventListener('focus', () => {
-                activePromptTextarea = textarea;
-            });
-        });
 
         function insertVariable(varName) {
-            if (activePromptTextarea) {
-                const start = activePromptTextarea.selectionStart;
-                const end = activePromptTextarea.selectionEnd;
-                const text = activePromptTextarea.value;
-                const variable = `{{${varName}}}`;
-
-                activePromptTextarea.value = text.substring(0, start) + variable + text.substring(end);
-                activePromptTextarea.selectionStart = activePromptTextarea.selectionEnd = start + variable.length;
-                activePromptTextarea.focus();
-            } else {
-                showToast('請先點擊要插入變數的文字框', 'error');
-            }
+            const textarea = document.getElementById('promptTemplate');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const variable = `{{${varName}}}`;
+            textarea.value = text.substring(0, start) + variable + text.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + variable.length;
+            textarea.focus();
         }
 
-        // Reset Prompts
-        function resetPrompts() {
-            if (confirm('確定要重設所有 Prompt 為預設值嗎？')) {
-                document.getElementById('promptBaseballFielder').value = `你是一位專業的體育新聞記者。請根據以下球員資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-位置：{{position}}
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述球員今日表現
-2. 引用具體數據
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。`;
-
-                document.getElementById('promptBaseballPitcher').value = `你是一位專業的體育新聞記者。請根據以下投手資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-位置：投手
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述投手今日投球表現
-2. 引用具體數據（局數、失分、三振等）
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。`;
-
-                document.getElementById('promptBasketball').value = `你是一位專業的體育新聞記者。請根據以下籃球員資料，撰寫一篇正式的體育新聞稿。
-
-球員：{{playerName}}
-球隊：{{team}}
-數據：{{stats}}
-
-相關新聞參考：
-{{relatedNews}}
-
-請以正式的體育新聞風格撰寫，包含：
-1. 開頭描述球員今日比賽表現
-2. 引用具體數據（得分、籃板、助攻等）
-3. 可適當引用相關新聞內容
-4. 結尾展望或教練/球員評論
-
-字數約 300-500 字。`;
-
-                showToast('Prompt 已重設為預設值');
-            }
-        }
-
-        // Auto-extract Sheet ID from URL
-        document.getElementById('googleSheetUrl').addEventListener('input', (e) => {
-            const url = e.target.value;
-            const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-            if (match) {
-                document.getElementById('googleSheetId').value = match[1];
-            }
-        });
-
-        // Export Settings
         function exportSettings() {
-            const settings = localStorage.getItem('sportpress_settings') || '{}';
-            const blob = new Blob([settings], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(SETTINGS, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `sportpress_settings_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = 'sportpress_settings.json';
             a.click();
-            URL.revokeObjectURL(url);
             showToast('設定已匯出');
         }
 
-        // Import Settings
         function importSettings() {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.json';
             input.onchange = (e) => {
-                const file = e.target.files[0];
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     try {
-                        const settings = JSON.parse(event.target.result);
-                        localStorage.setItem('sportpress_settings', JSON.stringify(settings));
+                        SETTINGS = JSON.parse(event.target.result);
+                        localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
                         loadSettings();
                         showToast('設定已匯入');
-                    } catch (error) {
-                        showToast('匯入失敗：無效的設定檔', 'error');
+                    } catch {
+                        showToast('匯入失敗', 'error');
                     }
                 };
-                reader.readAsText(file);
+                reader.readAsText(e.target.files[0]);
             };
             input.click();
         }
 
-        // Global Webhooks Object (used by actual API calls)
-        const WEBHOOKS = {
-            login: '',
-            searchPlayer: '',
-            searchNews: '',
-            generateNews: '',
-            saveArticle: '',
-            publish: '',
-            getArticles: ''
-        };
-
-        // Generic Webhook Caller
-        async function callWebhook(webhookName, data) {
-            const url = WEBHOOKS[webhookName];
-            if (!url) {
-                console.error(`Webhook URL not configured for: ${webhookName}`);
-                showToast(`請先在設定中配置 ${webhookName} Webhook`, 'error');
-                return null;
-            }
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                return await response.json();
-            } catch (error) {
-                console.error('Webhook call failed:', error);
-                showToast('連線失敗，請檢查網路或 Webhook 設定', 'error');
-                return null;
-            }
+        function previewFullPrompt() {
+            const preview = document.getElementById('promptPreview');
+            const prompt = buildPrompt('林安可', 'baseball', 'fielder', '打擊率 .325、18 轟、67 打點', state.selectedLength, state.selectedStyle);
+            preview.textContent = prompt;
+            preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
         }
-
-        // Load settings on page load
-        loadSettings();
     </script>
 </body>
 </html>
