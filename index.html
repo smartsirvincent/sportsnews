@@ -1056,6 +1056,10 @@
                                 </svg>
                                 產生社群貼文
                             </button>
+                            
+                            <div class="webhook-status" id="webhookStatus" style="margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 0.8rem; text-align: center;">
+                                <!-- Status will be updated by JS -->
+                            </div>
                         </div>
                     </div>
 
@@ -1476,6 +1480,20 @@
 
         // ==================== Init ====================
         loadSettings();
+        updateWebhookStatus();
+
+        function updateWebhookStatus() {
+            const statusEl = document.getElementById('webhookStatus');
+            if (SETTINGS.webhookGenerate && SETTINGS.webhookGenerate.trim() !== '') {
+                statusEl.style.background = 'rgba(46, 204, 113, 0.15)';
+                statusEl.style.color = 'var(--success)';
+                statusEl.innerHTML = '✓ Webhook 已設定，將連接 Make.com';
+            } else {
+                statusEl.style.background = 'rgba(243, 156, 18, 0.15)';
+                statusEl.style.color = 'var(--warning)';
+                statusEl.innerHTML = '⚠ 尚未設定 Webhook，將使用模擬資料（<a href="#" onclick="document.querySelector(\'[data-page=settings]\').click(); return false;" style="color: var(--warning); text-decoration: underline;">前往設定</a>）';
+            }
+        }
 
         // ==================== Login ====================
         loginForm.addEventListener('submit', (e) => {
@@ -1638,31 +1656,38 @@ ${position ? `位置：${position === 'pitcher' ? '投手' : '野手'}` : ''}
             };
 
             console.log('Sending to webhook:', data);
+            console.log('Webhook URL:', SETTINGS.webhookGenerate);
 
             // Call webhook or use mock
-            if (SETTINGS.webhookGenerate) {
+            if (SETTINGS.webhookGenerate && SETTINGS.webhookGenerate.trim() !== '') {
                 try {
+                    console.log('Calling webhook...');
                     const response = await fetch(SETTINGS.webhookGenerate, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     });
+                    
+                    console.log('Response status:', response.status);
                     const result = await response.json();
+                    console.log('Response data:', result);
                     
                     hideLoading();
                     
                     if (result.content) {
                         setDraft(result.content);
                     } else {
-                        showToast('產生失敗，請檢查 Webhook 設定', 'error');
+                        showToast('產生失敗，請檢查 Webhook 回傳格式', 'error');
                     }
                 } catch (error) {
                     hideLoading();
-                    console.error(error);
-                    showToast('連線失敗', 'error');
+                    console.error('Webhook error:', error);
+                    showToast('連線失敗：' + error.message, 'error');
                 }
             } else {
-                // Mock response
+                // Mock response - 沒有設定 Webhook 時使用
+                console.log('No webhook configured, using mock data');
+                showToast('提示：尚未設定 Webhook，使用模擬資料', 'success');
                 setTimeout(() => {
                     hideLoading();
                     const mockContent = generateMockPost(playerName, sportType, position, state.selectedLength, state.selectedStyle);
@@ -1954,12 +1979,14 @@ ${name} 本季持續累積好表現，是球隊爭冠的重要戰力！
 
         function saveSettings() {
             SETTINGS = {
-                webhookGenerate: document.getElementById('webhookGenerate').value,
-                webhookPublish: document.getElementById('webhookPublish').value,
-                googleSheetUrl: document.getElementById('googleSheetUrl').value,
+                webhookGenerate: document.getElementById('webhookGenerate').value.trim(),
+                webhookPublish: document.getElementById('webhookPublish').value.trim(),
+                googleSheetUrl: document.getElementById('googleSheetUrl').value.trim(),
                 promptTemplate: document.getElementById('promptTemplate').value
             };
             localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
+            console.log('Settings saved:', SETTINGS);
+            updateWebhookStatus();
             showToast('設定已儲存');
         }
 
