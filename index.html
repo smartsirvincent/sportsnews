@@ -197,6 +197,111 @@
             color: var(--text-muted);
         }
 
+        /* Checkbox inline style */
+        .form-group label input[type="checkbox"] {
+            width: auto;
+            vertical-align: middle;
+        }
+
+        /* IG Photo Required Tag */
+        .ig-photo-required {
+            font-size: 0.7rem;
+            background: var(--warning);
+            color: var(--dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        /* Photo Upload Section */
+        .photo-upload-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .photo-upload-section h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--dark);
+        }
+
+        .photo-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(230, 57, 70, 0.05);
+        }
+
+        .photo-upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .upload-placeholder {
+            color: var(--text-muted);
+        }
+
+        .upload-placeholder svg {
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .upload-placeholder p {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .upload-placeholder span {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .photo-preview {
+            position: relative;
+            display: inline-block;
+        }
+
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius-sm);
+        }
+
+        .remove-photo-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .remove-photo-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -1109,6 +1214,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="enableNewsSearch" style="width: auto; margin-right: 8px;">
+                                    啟動新聞搜尋與補充
+                                </label>
+                                <div class="hint" style="margin-top: 4px;">勾選後會透過 Perplexity 搜尋該球員的最新新聞作為參考</div>
+                            </div>
+
+                            <div class="form-group">
                                 <label>發文風格</label>
                                 <div class="option-buttons style-options" id="styleOptions">
                                     <button type="button" class="option-btn active" data-value="style1">📰 專業正式</button>
@@ -1182,12 +1295,46 @@
                                         <input type="checkbox" value="instagram">
                                         <div class="platform-icon instagram">IG</div>
                                         <span>Instagram</span>
+                                        <span class="ig-photo-required">需上傳照片</span>
                                         <div class="check-icon">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
                                                 <polyline points="20 6 9 17 4 12"/>
                                             </svg>
                                         </div>
                                     </label>
+                                </div>
+
+                                <!-- Photo Upload -->
+                                <div class="photo-upload-section" id="photoUploadSection">
+                                    <h4>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                                            <polyline points="21 15 16 10 5 21"/>
+                                        </svg>
+                                        上傳照片（選填，IG 必須）
+                                    </h4>
+                                    <div class="photo-upload-area" id="photoUploadArea">
+                                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                                        <div class="upload-placeholder" id="uploadPlaceholder">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <polyline points="17 8 12 3 7 8"/>
+                                                <line x1="12" y1="3" x2="12" y2="15"/>
+                                            </svg>
+                                            <p>點擊或拖曳上傳照片</p>
+                                            <span>支援 JPG、PNG、GIF（最大 5MB）</span>
+                                        </div>
+                                        <div class="photo-preview" id="photoPreview" style="display: none;">
+                                            <img id="previewImage" src="" alt="Preview">
+                                            <button class="remove-photo-btn" id="removePhotoBtn" type="button">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1456,6 +1603,9 @@
             draftContent: '',
             selectedPlatforms: [],
             selectedStyle: 'style1',
+            uploadedPhoto: null,
+            uploadedPhotoBase64: null,
+            enableNewsSearch: false,
             isGenerating: false,
             isPublishing: false
         };
@@ -1641,6 +1791,8 @@
         document.getElementById('sportType').addEventListener('change', (e) => {
             const positionGroup = document.getElementById('positionGroup');
             const positionSelect = document.getElementById('position');
+            const playerNameInput = document.getElementById('playerName');
+            const newsHighlightInput = document.getElementById('newsHighlight');
 
             if (e.target.value === 'baseball') {
                 positionGroup.style.display = 'block';
@@ -1649,8 +1801,16 @@
                     <option value="pitcher">投手</option>
                     <option value="fielder">野手</option>
                 `;
+                playerNameInput.placeholder = '例如：林安可';
+                newsHighlightInput.placeholder = '例如：今日3打數3安打，包含1發滿貫砲，單場7分打點創生涯新高...';
+            } else if (e.target.value === 'basketball') {
+                positionGroup.style.display = 'none';
+                playerNameInput.placeholder = '例如：林志傑';
+                newsHighlightInput.placeholder = '例如：今日攻下全場最高28分，外帶8籃板5助攻，第四節獨拿12分帶領球隊逆轉...';
             } else {
                 positionGroup.style.display = 'none';
+                playerNameInput.placeholder = '請輸入球員名字';
+                newsHighlightInput.placeholder = '請輸入今日重點...';
             }
         });
 
@@ -1662,6 +1822,82 @@
                 state.selectedStyle = btn.dataset.value;
             });
         });
+
+        // ==================== News Search Toggle ====================
+        document.getElementById('enableNewsSearch').addEventListener('change', (e) => {
+            state.enableNewsSearch = e.target.checked;
+        });
+
+        // ==================== Photo Upload ====================
+        const photoInput = document.getElementById('photoInput');
+        const photoUploadArea = document.getElementById('photoUploadArea');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImage = document.getElementById('previewImage');
+        const removePhotoBtn = document.getElementById('removePhotoBtn');
+
+        photoUploadArea.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        photoUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoUploadArea.classList.add('dragover');
+        });
+
+        photoUploadArea.addEventListener('dragleave', () => {
+            photoUploadArea.classList.remove('dragover');
+        });
+
+        photoUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            photoUploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handlePhotoUpload(file);
+            }
+        });
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handlePhotoUpload(file);
+            }
+        });
+
+        removePhotoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearPhoto();
+        });
+
+        function handlePhotoUpload(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('照片大小不能超過 5MB', 'error');
+                return;
+            }
+
+            state.uploadedPhoto = file;
+
+            // Convert to base64
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                state.uploadedPhotoBase64 = e.target.result;
+                previewImage.src = e.target.result;
+                uploadPlaceholder.style.display = 'none';
+                photoPreview.style.display = 'inline-block';
+                showToast('照片已上傳');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearPhoto() {
+            state.uploadedPhoto = null;
+            state.uploadedPhotoBase64 = null;
+            photoInput.value = '';
+            previewImage.src = '';
+            uploadPlaceholder.style.display = 'block';
+            photoPreview.style.display = 'none';
+        }
 
         // ==================== Get Current Prompt & Style ====================
         function getCurrentPrompt(sport, position) {
@@ -1734,19 +1970,23 @@
                 // 6. 今日重點補充（選填）
                 newsHighlight: newsHighlight,
                 
-                // 7. 使用者資訊
+                // 7. 是否啟動新聞搜尋
+                enableNewsSearch: state.enableNewsSearch,
+                
+                // 8. 使用者資訊
                 userId: state.currentUser?.id || 'guest',
                 userName: state.currentUser?.name || 'guest'
             };
 
-            console.log('=== 送出資料 ===');
+            console.log('=== 送出資料到產生貼文 Webhook ===');
             console.log('運動種類:', data.sport);
             console.log('位置:', data.position);
             console.log('球員:', data.playerName);
-            console.log('風格:', data.styleName);
+            console.log('風格:', data.styleName, '-', data.styleDescription);
             console.log('重點補充:', data.newsHighlight || '(無)');
+            console.log('啟動新聞搜尋:', data.enableNewsSearch);
             console.log('提示詞:', data.prompt);
-            console.log('完整資料:', data);
+            console.log('完整資料:', JSON.stringify(data, null, 2));
             console.log('Webhook URL:', SETTINGS.webhookGenerate);
 
             // Call webhook or use mock
@@ -1760,15 +2000,32 @@
                     });
                     
                     console.log('Response status:', response.status);
-                    const result = await response.json();
-                    console.log('Response data:', result);
+                    
+                    // 嘗試解析回傳
+                    let result;
+                    const responseText = await response.text();
+                    console.log('Response raw text:', responseText);
+                    
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (e) {
+                        // 如果不是 JSON，直接當作文字內容
+                        result = { content: responseText };
+                    }
+                    
+                    console.log('Response parsed:', result);
                     
                     hideLoading();
                     
-                    if (result.content) {
-                        setDraft(result.content);
+                    // 支援多種回傳格式
+                    const content = result.content || result.text || result.message || result.data || (typeof result === 'string' ? result : null);
+                    
+                    if (content) {
+                        setDraft(content);
+                        console.log('✅ 貼文已成功載入到草稿區');
                     } else {
-                        showToast('產生失敗，請檢查 Webhook 回傳格式', 'error');
+                        console.error('無法解析回傳內容:', result);
+                        showToast('產生失敗，請檢查 Webhook 回傳格式（需要 content 欄位）', 'error');
                     }
                 } catch (error) {
                     hideLoading();
@@ -1852,6 +2109,8 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             updateCharCount();
             updateDraftStatus(false);
             publishBtn.disabled = true;
+            // 清除照片
+            clearPhoto();
         }
 
         document.getElementById('clearBtn').addEventListener('click', clearDraft);
@@ -1902,17 +2161,32 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 return;
             }
 
+            // 檢查 IG 是否有上傳照片
+            if (state.selectedPlatforms.includes('instagram') && !state.uploadedPhotoBase64) {
+                showToast('發布到 Instagram 必須上傳照片', 'error');
+                return;
+            }
+
             showLoading('正在發布貼文...');
 
             const data = {
                 content: content,
                 platforms: state.selectedPlatforms,
                 userId: state.currentUser?.id || 'guest',
+                userName: state.currentUser?.name || 'guest',
                 playerName: document.getElementById('playerName').value,
-                sport: document.getElementById('sportType').value
+                sport: document.getElementById('sportType').value,
+                // 照片（如果有）
+                hasPhoto: !!state.uploadedPhotoBase64,
+                photo: state.uploadedPhotoBase64 || null,
+                photoFileName: state.uploadedPhoto?.name || null
             };
 
-            if (SETTINGS.webhookPublish) {
+            console.log('=== 發布資料 ===');
+            console.log('平台:', data.platforms);
+            console.log('有照片:', data.hasPhoto);
+
+            if (SETTINGS.webhookPublish && SETTINGS.webhookPublish.trim() !== '') {
                 try {
                     const response = await fetch(SETTINGS.webhookPublish, {
                         method: 'POST',
@@ -1924,7 +2198,7 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                     showSuccessModal(state.selectedPlatforms);
                 } catch (error) {
                     hideLoading();
-                    showToast('發布失敗', 'error');
+                    showToast('發布失敗：' + error.message, 'error');
                 }
             } else {
                 // Mock
