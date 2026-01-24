@@ -988,6 +988,16 @@
             text-align: center;
         }
 
+        .style-emoji-input {
+            width: 50px !important;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 6px !important;
+            background: var(--dark-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+        }
+
         .style-setting-header input {
             flex: 1;
             padding: 8px 12px;
@@ -1513,7 +1523,7 @@
                         <div class="style-setting-grid">
                             <div class="style-setting-item">
                                 <div class="style-setting-header">
-                                    <span class="style-emoji">📰</span>
+                                    <input type="text" id="style1Emoji" class="style-emoji-input" value="📰" maxlength="2">
                                     <input type="text" id="style1Name" value="專業正式" placeholder="風格名稱">
                                 </div>
                                 <textarea id="style1Desc" rows="2" placeholder="風格描述">用詞精準、客觀報導，適合主流媒體發布的正式風格。</textarea>
@@ -1521,7 +1531,7 @@
                             
                             <div class="style-setting-item">
                                 <div class="style-setting-header">
-                                    <span class="style-emoji">🔥</span>
+                                    <input type="text" id="style2Emoji" class="style-emoji-input" value="🔥" maxlength="2">
                                     <input type="text" id="style2Name" value="熱血激昂" placeholder="風格名稱">
                                 </div>
                                 <textarea id="style2Desc" rows="2" placeholder="風格描述">充滿熱情與能量，使用強烈的形容詞和感嘆句，讓讀者感受比賽的激情。</textarea>
@@ -1529,7 +1539,7 @@
                             
                             <div class="style-setting-item">
                                 <div class="style-setting-header">
-                                    <span class="style-emoji">😄</span>
+                                    <input type="text" id="style3Emoji" class="style-emoji-input" value="😄" maxlength="2">
                                     <input type="text" id="style3Name" value="幽默風趣" placeholder="風格名稱">
                                 </div>
                                 <textarea id="style3Desc" rows="2" placeholder="風格描述">適當加入有趣的比喻、網路用語或輕鬆的調侃，讓讀者會心一笑。</textarea>
@@ -1537,7 +1547,7 @@
                             
                             <div class="style-setting-item">
                                 <div class="style-setting-header">
-                                    <span class="style-emoji">📊</span>
+                                    <input type="text" id="style4Emoji" class="style-emoji-input" value="📊" maxlength="2">
                                     <input type="text" id="style4Name" value="數據分析" placeholder="風格名稱">
                                 </div>
                                 <textarea id="style4Desc" rows="2" placeholder="風格描述">著重於數據解讀、統計比較和趨勢分析，用數字說話。</textarea>
@@ -1545,7 +1555,7 @@
                             
                             <div class="style-setting-item">
                                 <div class="style-setting-header">
-                                    <span class="style-emoji">📖</span>
+                                    <input type="text" id="style5Emoji" class="style-emoji-input" value="📖" maxlength="2">
                                     <input type="text" id="style5Name" value="故事敘述" placeholder="風格名稱">
                                 </div>
                                 <textarea id="style5Desc" rows="2" placeholder="風格描述">描繪比賽情境、球員心路歷程，讓讀者有身歷其境的感覺。</textarea>
@@ -2144,6 +2154,8 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 
                 state.selectedPlatforms = Array.from(document.querySelectorAll('.platform-checkbox input:checked'))
                     .map(i => i.value);
+                
+                console.log('已選擇平台:', state.selectedPlatforms);
             });
         });
 
@@ -2176,6 +2188,8 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 userName: state.currentUser?.name || 'guest',
                 playerName: document.getElementById('playerName').value,
                 sport: document.getElementById('sportType').value,
+                // 是否為圖片發文
+                isImagePost: !!state.uploadedPhotoBase64,
                 // 照片（如果有）
                 hasPhoto: !!state.uploadedPhotoBase64,
                 photo: state.uploadedPhotoBase64 || null,
@@ -2184,33 +2198,60 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
 
             console.log('=== 發布資料 ===');
             console.log('平台:', data.platforms);
-            console.log('有照片:', data.hasPhoto);
+            console.log('是否為圖片發文:', data.isImagePost);
+            console.log('Webhook URL:', SETTINGS.webhookPublish);
 
             if (SETTINGS.webhookPublish && SETTINGS.webhookPublish.trim() !== '') {
                 try {
+                    console.log('Calling publish webhook...');
                     const response = await fetch(SETTINGS.webhookPublish, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     });
-                    const result = await response.json();
+                    
+                    console.log('Response status:', response.status);
+                    
+                    // 解析回應
+                    let result;
+                    const responseText = await response.text();
+                    console.log('Response raw:', responseText);
+                    
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (e) {
+                        result = { success: response.ok, message: responseText };
+                    }
+                    
+                    console.log('Response parsed:', result);
                     hideLoading();
-                    showSuccessModal(state.selectedPlatforms);
+                    
+                    // 根據 Webhook 回應決定是否成功
+                    if (response.ok && (result.success !== false)) {
+                        console.log('✅ 發布成功');
+                        showSuccessModal(state.selectedPlatforms, result);
+                    } else {
+                        console.error('❌ 發布失敗:', result);
+                        showToast('發布失敗：' + (result.message || result.error || '未知錯誤'), 'error');
+                    }
                 } catch (error) {
                     hideLoading();
+                    console.error('Webhook error:', error);
                     showToast('發布失敗：' + error.message, 'error');
                 }
             } else {
-                // Mock
+                // Mock - 沒有設定 Webhook
+                console.log('No webhook configured, using mock');
+                showToast('提示：尚未設定發布 Webhook，使用模擬發布', 'success');
                 setTimeout(() => {
                     hideLoading();
-                    showSuccessModal(state.selectedPlatforms);
+                    showSuccessModal(state.selectedPlatforms, { success: true });
                 }, 1500);
             }
         });
 
         // ==================== Modal ====================
-        function showSuccessModal(platforms) {
+        function showSuccessModal(platforms, webhookResult = {}) {
             const resultsDiv = document.getElementById('publishResults');
             resultsDiv.innerHTML = platforms.map(p => `
                 <div class="publish-result-item">
@@ -2221,6 +2262,17 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                     <span style="margin-left: auto; color: var(--success);">已發布</span>
                 </div>
             `).join('');
+            
+            // 如果 Webhook 有回傳額外資訊，顯示出來
+            if (webhookResult.postUrl || webhookResult.postId) {
+                resultsDiv.innerHTML += `
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted);">
+                        ${webhookResult.postId ? `貼文 ID: ${webhookResult.postId}` : ''}
+                        ${webhookResult.postUrl ? `<br><a href="${webhookResult.postUrl}" target="_blank" style="color: var(--primary);">查看貼文</a>` : ''}
+                    </div>
+                `;
+            }
+            
             document.getElementById('successModal').classList.add('active');
         }
 
@@ -2278,14 +2330,19 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             const style4 = SETTINGS.style4 || DEFAULT_STYLES.style4;
             const style5 = SETTINGS.style5 || DEFAULT_STYLES.style5;
             
+            document.getElementById('style1Emoji').value = style1.emoji;
             document.getElementById('style1Name').value = style1.name;
             document.getElementById('style1Desc').value = style1.description;
+            document.getElementById('style2Emoji').value = style2.emoji;
             document.getElementById('style2Name').value = style2.name;
             document.getElementById('style2Desc').value = style2.description;
+            document.getElementById('style3Emoji').value = style3.emoji;
             document.getElementById('style3Name').value = style3.name;
             document.getElementById('style3Desc').value = style3.description;
+            document.getElementById('style4Emoji').value = style4.emoji;
             document.getElementById('style4Name').value = style4.name;
             document.getElementById('style4Desc').value = style4.description;
+            document.getElementById('style5Emoji').value = style5.emoji;
             document.getElementById('style5Name').value = style5.name;
             document.getElementById('style5Desc').value = style5.description;
             
@@ -2307,27 +2364,27 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 // 風格
                 style1: {
                     name: document.getElementById('style1Name').value,
-                    emoji: '📰',
+                    emoji: document.getElementById('style1Emoji').value || '📰',
                     description: document.getElementById('style1Desc').value
                 },
                 style2: {
                     name: document.getElementById('style2Name').value,
-                    emoji: '🔥',
+                    emoji: document.getElementById('style2Emoji').value || '🔥',
                     description: document.getElementById('style2Desc').value
                 },
                 style3: {
                     name: document.getElementById('style3Name').value,
-                    emoji: '😄',
+                    emoji: document.getElementById('style3Emoji').value || '😄',
                     description: document.getElementById('style3Desc').value
                 },
                 style4: {
                     name: document.getElementById('style4Name').value,
-                    emoji: '📊',
+                    emoji: document.getElementById('style4Emoji').value || '📊',
                     description: document.getElementById('style4Desc').value
                 },
                 style5: {
                     name: document.getElementById('style5Name').value,
-                    emoji: '📖',
+                    emoji: document.getElementById('style5Emoji').value || '📖',
                     description: document.getElementById('style5Desc').value
                 }
             };
@@ -2357,14 +2414,19 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
         }
         
         function resetStyles() {
+            document.getElementById('style1Emoji').value = DEFAULT_STYLES.style1.emoji;
             document.getElementById('style1Name').value = DEFAULT_STYLES.style1.name;
             document.getElementById('style1Desc').value = DEFAULT_STYLES.style1.description;
+            document.getElementById('style2Emoji').value = DEFAULT_STYLES.style2.emoji;
             document.getElementById('style2Name').value = DEFAULT_STYLES.style2.name;
             document.getElementById('style2Desc').value = DEFAULT_STYLES.style2.description;
+            document.getElementById('style3Emoji').value = DEFAULT_STYLES.style3.emoji;
             document.getElementById('style3Name').value = DEFAULT_STYLES.style3.name;
             document.getElementById('style3Desc').value = DEFAULT_STYLES.style3.description;
+            document.getElementById('style4Emoji').value = DEFAULT_STYLES.style4.emoji;
             document.getElementById('style4Name').value = DEFAULT_STYLES.style4.name;
             document.getElementById('style4Desc').value = DEFAULT_STYLES.style4.description;
+            document.getElementById('style5Emoji').value = DEFAULT_STYLES.style5.emoji;
             document.getElementById('style5Name').value = DEFAULT_STYLES.style5.name;
             document.getElementById('style5Desc').value = DEFAULT_STYLES.style5.description;
             showToast('風格已重設');
