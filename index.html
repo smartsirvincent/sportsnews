@@ -213,6 +213,75 @@
             margin-left: 4px;
         }
 
+        .ig-text-only {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        /* Post Type Selection */
+        .post-type-selection {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .post-type-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px;
+            background: var(--dark);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-type-option:hover {
+            border-color: var(--text-muted);
+        }
+
+        .post-type-option.selected {
+            border-color: var(--primary);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .post-type-option input {
+            display: none;
+        }
+
+        .post-type-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        .post-type-option.selected .post-type-icon {
+            color: var(--primary);
+        }
+
+        .post-type-option span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .post-type-option.selected span {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Platform Disabled */
+        .platform-checkbox.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
         /* Photo Upload Section */
         .photo-upload-section {
             margin-top: 20px;
@@ -1279,7 +1348,67 @@
 
                             <!-- Platform Selection -->
                             <div class="platform-selection">
-                                <h4>選擇發布平台</h4>
+                                <h4>發文類型</h4>
+                                <div class="post-type-selection">
+                                    <label class="post-type-option selected" data-type="text">
+                                        <input type="radio" name="postType" value="text" checked>
+                                        <div class="post-type-icon">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                                <polyline points="14 2 14 8 20 8"/>
+                                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                            </svg>
+                                        </div>
+                                        <span>純文字發文</span>
+                                    </label>
+                                    <label class="post-type-option" data-type="image">
+                                        <input type="radio" name="postType" value="image">
+                                        <div class="post-type-icon">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                                <polyline points="21 15 16 10 5 21"/>
+                                            </svg>
+                                        </div>
+                                        <span>圖片發文</span>
+                                    </label>
+                                </div>
+
+                                <!-- Photo Upload (只在圖片發文時顯示) -->
+                                <div class="photo-upload-section" id="photoUploadSection" style="display: none;">
+                                    <h4>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                                            <polyline points="21 15 16 10 5 21"/>
+                                        </svg>
+                                        上傳照片（必須）
+                                    </h4>
+                                    <div class="photo-upload-area" id="photoUploadArea">
+                                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                                        <div class="upload-placeholder" id="uploadPlaceholder">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <polyline points="17 8 12 3 7 8"/>
+                                                <line x1="12" y1="3" x2="12" y2="15"/>
+                                            </svg>
+                                            <p>點擊或拖曳上傳照片</p>
+                                            <span>支援 JPG、PNG、GIF（最大 5MB）</span>
+                                        </div>
+                                        <div class="photo-preview" id="photoPreview" style="display: none;">
+                                            <img id="previewImage" src="" alt="Preview">
+                                            <button class="remove-photo-btn" id="removePhotoBtn" type="button">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 style="margin-top: 20px;">選擇發布平台</h4>
                                 <div class="platform-checkboxes">
                                     <label class="platform-checkbox" data-platform="threads">
                                         <input type="checkbox" value="threads">
@@ -1305,46 +1434,13 @@
                                         <input type="checkbox" value="instagram">
                                         <div class="platform-icon instagram">IG</div>
                                         <span>Instagram</span>
-                                        <span class="ig-photo-required">需上傳照片</span>
+                                        <span class="ig-text-only">(純文字不可用)</span>
                                         <div class="check-icon">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
                                                 <polyline points="20 6 9 17 4 12"/>
                                             </svg>
                                         </div>
                                     </label>
-                                </div>
-
-                                <!-- Photo Upload -->
-                                <div class="photo-upload-section" id="photoUploadSection">
-                                    <h4>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                                            <polyline points="21 15 16 10 5 21"/>
-                                        </svg>
-                                        上傳照片（選填，IG 必須）
-                                    </h4>
-                                    <div class="photo-upload-area" id="photoUploadArea">
-                                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
-                                        <div class="upload-placeholder" id="uploadPlaceholder">
-                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                                <polyline points="17 8 12 3 7 8"/>
-                                                <line x1="12" y1="3" x2="12" y2="15"/>
-                                            </svg>
-                                            <p>點擊或拖曳上傳照片</p>
-                                            <span>支援 JPG、PNG、GIF（最大 5MB）</span>
-                                        </div>
-                                        <div class="photo-preview" id="photoPreview" style="display: none;">
-                                            <img id="previewImage" src="" alt="Preview">
-                                            <button class="remove-photo-btn" id="removePhotoBtn" type="button">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -1613,6 +1709,7 @@
             draftContent: '',
             selectedPlatforms: [],
             selectedStyle: 'style1',
+            postType: 'text',  // 'text' 或 'image'
             uploadedPhoto: null,
             uploadedPhotoBase64: null,
             enableNewsSearch: false,
@@ -1837,6 +1934,46 @@
         document.getElementById('enableNewsSearch').addEventListener('change', (e) => {
             state.enableNewsSearch = e.target.checked;
         });
+
+        // ==================== Post Type Selection ====================
+        document.querySelectorAll('.post-type-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.post-type-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                option.querySelector('input').checked = true;
+                
+                state.postType = option.dataset.type;
+                console.log('發文類型:', state.postType);
+                
+                const photoSection = document.getElementById('photoUploadSection');
+                const igCheckbox = document.querySelector('.platform-checkbox[data-platform="instagram"]');
+                const igTextOnly = igCheckbox.querySelector('.ig-text-only');
+                
+                if (state.postType === 'image') {
+                    // 圖片發文：顯示上傳區，IG 可選
+                    photoSection.style.display = 'block';
+                    igCheckbox.classList.remove('disabled');
+                    igTextOnly.style.display = 'none';
+                } else {
+                    // 純文字發文：隱藏上傳區，IG 不可選
+                    photoSection.style.display = 'none';
+                    igCheckbox.classList.add('disabled');
+                    igTextOnly.style.display = 'inline';
+                    // 如果已選 IG，取消選擇
+                    const igInput = igCheckbox.querySelector('input');
+                    if (igInput.checked) {
+                        igInput.checked = false;
+                        igCheckbox.classList.remove('selected');
+                        state.selectedPlatforms = state.selectedPlatforms.filter(p => p !== 'instagram');
+                    }
+                    // 清除照片
+                    clearPhoto();
+                }
+            });
+        });
+
+        // 初始化：純文字模式，IG 不可選
+        document.querySelector('.platform-checkbox[data-platform="instagram"]').classList.add('disabled');
 
         // ==================== Photo Upload ====================
         const photoInput = document.getElementById('photoInput');
@@ -2114,8 +2251,16 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             draftContent.disabled = true;
             state.draftContent = '';
             state.selectedPlatforms = [];
+            state.postType = 'text';
             document.querySelectorAll('.platform-checkbox').forEach(cb => cb.classList.remove('selected'));
             document.querySelectorAll('.platform-checkbox input').forEach(i => i.checked = false);
+            // 重設發文類型為純文字
+            document.querySelectorAll('.post-type-option').forEach(o => o.classList.remove('selected'));
+            document.querySelector('.post-type-option[data-type="text"]').classList.add('selected');
+            document.querySelector('.post-type-option[data-type="text"] input').checked = true;
+            document.getElementById('photoUploadSection').style.display = 'none';
+            // IG 不可選
+            document.querySelector('.platform-checkbox[data-platform="instagram"]').classList.add('disabled');
             updateCharCount();
             updateDraftStatus(false);
             publishBtn.disabled = true;
@@ -2173,23 +2318,38 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 return;
             }
 
-            // 檢查 IG 是否有上傳照片
-            if (state.selectedPlatforms.includes('instagram') && !state.uploadedPhotoBase64) {
-                showToast('發布到 Instagram 必須上傳照片', 'error');
+            // 檢查圖片發文是否有上傳照片
+            if (state.postType === 'image' && !state.uploadedPhotoBase64) {
+                showToast('圖片發文必須上傳照片', 'error');
                 return;
             }
 
             showLoading('正在發布貼文...');
 
             const data = {
+                // 貼文內容
                 content: content,
+                
+                // 發文類型
+                postType: state.postType,
+                isImagePost: state.postType === 'image',
+                
+                // 三個平台分別為 true/false
+                threads: state.selectedPlatforms.includes('threads'),
+                facebook: state.selectedPlatforms.includes('facebook'),
+                instagram: state.selectedPlatforms.includes('instagram'),
+                
+                // 也保留陣列格式（向下相容）
                 platforms: state.selectedPlatforms,
+                
+                // 使用者資訊
                 userId: state.currentUser?.id || 'guest',
                 userName: state.currentUser?.name || 'guest',
+                
+                // 球員資訊
                 playerName: document.getElementById('playerName').value,
                 sport: document.getElementById('sportType').value,
-                // 是否為圖片發文
-                isImagePost: !!state.uploadedPhotoBase64,
+                
                 // 照片（如果有）
                 hasPhoto: !!state.uploadedPhotoBase64,
                 photo: state.uploadedPhotoBase64 || null,
@@ -2197,8 +2357,12 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             };
 
             console.log('=== 發布資料 ===');
-            console.log('平台:', data.platforms);
+            console.log('發文類型:', data.postType);
             console.log('是否為圖片發文:', data.isImagePost);
+            console.log('Threads:', data.threads);
+            console.log('Facebook:', data.facebook);
+            console.log('Instagram:', data.instagram);
+            console.log('有照片:', data.hasPhoto);
             console.log('Webhook URL:', SETTINGS.webhookPublish);
 
             if (SETTINGS.webhookPublish && SETTINGS.webhookPublish.trim() !== '') {
