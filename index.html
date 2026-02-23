@@ -1343,7 +1343,9 @@
                                 </div>
                             </div>
 
-                            <textarea class="draft-textarea" id="draftContent" placeholder="輸入球員名字後，點擊「產生社群貼文」，AI 會自動產生貼文內容...&#10;&#10;你可以在這裡編輯修改內容。" disabled></textarea>
+                            <textarea class="draft-textarea" id="draftContent" placeholder="你可以直接在這裡輸入貼文內容...
+
+或輸入球員資料後，點擊「產生社群貼文」讓 AI 自動產生。"></textarea>
                             <div class="char-count"><span id="charCount">0</span> 字</div>
 
                             <!-- Platform Selection -->
@@ -1591,7 +1593,10 @@
                     </div>
 
                     <div class="settings-actions">
-                        <button class="btn btn-primary" onclick="saveSettings()">儲存設定</button>
+                        <div class="save-reminder" style="width: 100%; margin-bottom: 12px; padding: 12px; background: rgba(243, 156, 18, 0.15); border-radius: 8px; color: var(--warning); font-size: 0.9rem;">
+                            ⚠️ 修改後請記得按「儲存設定」，否則重新整理後會遺失！
+                        </div>
+                        <button class="btn btn-primary" onclick="saveSettings()">💾 儲存設定</button>
                         <button class="btn btn-secondary" onclick="exportSettings()">匯出設定</button>
                         <button class="btn btn-ghost" onclick="importSettings()">匯入設定</button>
                     </div>
@@ -2060,7 +2065,6 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
 
         function setDraft(content) {
             draftContent.value = content;
-            draftContent.disabled = false;
             state.draftContent = content;
             updateCharCount();
             updateDraftStatus(true);
@@ -2070,7 +2074,6 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
 
         function clearDraft() {
             draftContent.value = '';
-            draftContent.disabled = true;
             state.draftContent = '';
             state.selectedPlatforms = [];
             document.querySelectorAll('.platform-checkbox').forEach(cb => cb.classList.remove('selected'));
@@ -2096,6 +2099,15 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
         draftContent.addEventListener('input', () => {
             state.draftContent = draftContent.value;
             updateCharCount();
+            
+            // 如果有內容，啟用發布按鈕
+            if (draftContent.value.trim()) {
+                updateDraftStatus(true);
+                publishBtn.disabled = false;
+            } else {
+                updateDraftStatus(false);
+                publishBtn.disabled = true;
+            }
         });
 
         function updateCharCount() {
@@ -2121,7 +2133,7 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             const content = draftContent.value.trim();
             
             if (!content) {
-                showToast('請先產生貼文內容', 'error');
+                showToast('請輸入貼文內容', 'error');
                 return;
             }
 
