@@ -1348,67 +1348,7 @@
 
                             <!-- Platform Selection -->
                             <div class="platform-selection">
-                                <h4>發文類型</h4>
-                                <div class="post-type-selection">
-                                    <label class="post-type-option selected" data-type="text">
-                                        <input type="radio" name="postType" value="text" checked>
-                                        <div class="post-type-icon">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                                <polyline points="14 2 14 8 20 8"/>
-                                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                            </svg>
-                                        </div>
-                                        <span>純文字發文</span>
-                                    </label>
-                                    <label class="post-type-option" data-type="image">
-                                        <input type="radio" name="postType" value="image">
-                                        <div class="post-type-icon">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                                <polyline points="21 15 16 10 5 21"/>
-                                            </svg>
-                                        </div>
-                                        <span>圖片發文</span>
-                                    </label>
-                                </div>
-
-                                <!-- Photo Upload (只在圖片發文時顯示) -->
-                                <div class="photo-upload-section" id="photoUploadSection" style="display: none;">
-                                    <h4>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                                            <polyline points="21 15 16 10 5 21"/>
-                                        </svg>
-                                        上傳照片（必須）
-                                    </h4>
-                                    <div class="photo-upload-area" id="photoUploadArea">
-                                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
-                                        <div class="upload-placeholder" id="uploadPlaceholder">
-                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                                <polyline points="17 8 12 3 7 8"/>
-                                                <line x1="12" y1="3" x2="12" y2="15"/>
-                                            </svg>
-                                            <p>點擊或拖曳上傳照片</p>
-                                            <span>支援 JPG、PNG、GIF（最大 5MB）</span>
-                                        </div>
-                                        <div class="photo-preview" id="photoPreview" style="display: none;">
-                                            <img id="previewImage" src="" alt="Preview">
-                                            <button class="remove-photo-btn" id="removePhotoBtn" type="button">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h4 style="margin-top: 20px;">選擇發布平台</h4>
+                                <h4>選擇發布平台</h4>
                                 <div class="platform-checkboxes">
                                     <label class="platform-checkbox" data-platform="threads">
                                         <input type="checkbox" value="threads">
@@ -1424,17 +1364,6 @@
                                         <input type="checkbox" value="facebook">
                                         <div class="platform-icon facebook">f</div>
                                         <span>Facebook</span>
-                                        <div class="check-icon">
-                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
-                                                <polyline points="20 6 9 17 4 12"/>
-                                            </svg>
-                                        </div>
-                                    </label>
-                                    <label class="platform-checkbox" data-platform="instagram">
-                                        <input type="checkbox" value="instagram">
-                                        <div class="platform-icon instagram">IG</div>
-                                        <span>Instagram</span>
-                                        <span class="ig-text-only">(純文字不可用)</span>
                                         <div class="check-icon">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
                                                 <polyline points="20 6 9 17 4 12"/>
@@ -1709,9 +1638,6 @@
             draftContent: '',
             selectedPlatforms: [],
             selectedStyle: 'style1',
-            postType: 'text',  // 'text' 或 'image'
-            uploadedPhoto: null,
-            uploadedPhotoBase64: null,
             enableNewsSearch: false,
             isGenerating: false,
             isPublishing: false
@@ -1811,10 +1737,17 @@
             { id: 'U099', username: 'admin', password: 'admin2025!', name: '管理員' }
         ];
 
+        // ==================== Default Webhook URLs ====================
+        // 固定的 Make Webhook 網址
+        const DEFAULT_WEBHOOKS = {
+            generate: 'https://hook.eu2.make.com/sgimb6f1httor9fvqkllv34pyy47cv2d',
+            publish: 'https://hook.eu2.make.com/aa31s2es3arjnagrhdwekspsjooz7i7y'
+        };
+
         // ==================== Settings ====================
         let SETTINGS = {
-            webhookGenerate: '',
-            webhookPublish: '',
+            webhookGenerate: DEFAULT_WEBHOOKS.generate,
+            webhookPublish: DEFAULT_WEBHOOKS.publish,
             googleSheetUrl: '',
             // 三種提示詞
             promptBaseballPitcher: DEFAULT_PROMPTS.baseballPitcher,
@@ -1934,117 +1867,6 @@
         document.getElementById('enableNewsSearch').addEventListener('change', (e) => {
             state.enableNewsSearch = e.target.checked;
         });
-
-        // ==================== Post Type Selection ====================
-        document.querySelectorAll('.post-type-option').forEach(option => {
-            option.addEventListener('click', () => {
-                document.querySelectorAll('.post-type-option').forEach(o => o.classList.remove('selected'));
-                option.classList.add('selected');
-                option.querySelector('input').checked = true;
-                
-                state.postType = option.dataset.type;
-                console.log('發文類型:', state.postType);
-                
-                const photoSection = document.getElementById('photoUploadSection');
-                const igCheckbox = document.querySelector('.platform-checkbox[data-platform="instagram"]');
-                const igTextOnly = igCheckbox.querySelector('.ig-text-only');
-                
-                if (state.postType === 'image') {
-                    // 圖片發文：顯示上傳區，IG 可選
-                    photoSection.style.display = 'block';
-                    igCheckbox.classList.remove('disabled');
-                    igTextOnly.style.display = 'none';
-                } else {
-                    // 純文字發文：隱藏上傳區，IG 不可選
-                    photoSection.style.display = 'none';
-                    igCheckbox.classList.add('disabled');
-                    igTextOnly.style.display = 'inline';
-                    // 如果已選 IG，取消選擇
-                    const igInput = igCheckbox.querySelector('input');
-                    if (igInput.checked) {
-                        igInput.checked = false;
-                        igCheckbox.classList.remove('selected');
-                        state.selectedPlatforms = state.selectedPlatforms.filter(p => p !== 'instagram');
-                    }
-                    // 清除照片
-                    clearPhoto();
-                }
-            });
-        });
-
-        // 初始化：純文字模式，IG 不可選
-        document.querySelector('.platform-checkbox[data-platform="instagram"]').classList.add('disabled');
-
-        // ==================== Photo Upload ====================
-        const photoInput = document.getElementById('photoInput');
-        const photoUploadArea = document.getElementById('photoUploadArea');
-        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-        const photoPreview = document.getElementById('photoPreview');
-        const previewImage = document.getElementById('previewImage');
-        const removePhotoBtn = document.getElementById('removePhotoBtn');
-
-        photoUploadArea.addEventListener('click', () => {
-            photoInput.click();
-        });
-
-        photoUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            photoUploadArea.classList.add('dragover');
-        });
-
-        photoUploadArea.addEventListener('dragleave', () => {
-            photoUploadArea.classList.remove('dragover');
-        });
-
-        photoUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            photoUploadArea.classList.remove('dragover');
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                handlePhotoUpload(file);
-            }
-        });
-
-        photoInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                handlePhotoUpload(file);
-            }
-        });
-
-        removePhotoBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            clearPhoto();
-        });
-
-        function handlePhotoUpload(file) {
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('照片大小不能超過 5MB', 'error');
-                return;
-            }
-
-            state.uploadedPhoto = file;
-
-            // Convert to base64
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                state.uploadedPhotoBase64 = e.target.result;
-                previewImage.src = e.target.result;
-                uploadPlaceholder.style.display = 'none';
-                photoPreview.style.display = 'inline-block';
-                showToast('照片已上傳');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function clearPhoto() {
-            state.uploadedPhoto = null;
-            state.uploadedPhotoBase64 = null;
-            photoInput.value = '';
-            previewImage.src = '';
-            uploadPlaceholder.style.display = 'block';
-            photoPreview.style.display = 'none';
-        }
 
         // ==================== Get Current Prompt & Style ====================
         function getCurrentPrompt(sport, position) {
@@ -2251,21 +2073,11 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             draftContent.disabled = true;
             state.draftContent = '';
             state.selectedPlatforms = [];
-            state.postType = 'text';
             document.querySelectorAll('.platform-checkbox').forEach(cb => cb.classList.remove('selected'));
             document.querySelectorAll('.platform-checkbox input').forEach(i => i.checked = false);
-            // 重設發文類型為純文字
-            document.querySelectorAll('.post-type-option').forEach(o => o.classList.remove('selected'));
-            document.querySelector('.post-type-option[data-type="text"]').classList.add('selected');
-            document.querySelector('.post-type-option[data-type="text"] input').checked = true;
-            document.getElementById('photoUploadSection').style.display = 'none';
-            // IG 不可選
-            document.querySelector('.platform-checkbox[data-platform="instagram"]').classList.add('disabled');
             updateCharCount();
             updateDraftStatus(false);
             publishBtn.disabled = true;
-            // 清除照片
-            clearPhoto();
         }
 
         document.getElementById('clearBtn').addEventListener('click', clearDraft);
@@ -2318,26 +2130,19 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 return;
             }
 
-            // 檢查圖片發文是否有上傳照片
-            if (state.postType === 'image' && !state.uploadedPhotoBase64) {
-                showToast('圖片發文必須上傳照片', 'error');
-                return;
-            }
-
             showLoading('正在發布貼文...');
 
             const data = {
                 // 貼文內容
                 content: content,
                 
-                // 發文類型
-                postType: state.postType,
-                isImagePost: state.postType === 'image',
+                // 發文類型（純文字）
+                postType: 'text',
+                isImagePost: false,
                 
-                // 三個平台分別為 true/false
+                // 兩個平台分別為 true/false
                 threads: state.selectedPlatforms.includes('threads'),
                 facebook: state.selectedPlatforms.includes('facebook'),
-                instagram: state.selectedPlatforms.includes('instagram'),
                 
                 // 也保留陣列格式（向下相容）
                 platforms: state.selectedPlatforms,
@@ -2348,21 +2153,12 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 
                 // 球員資訊
                 playerName: document.getElementById('playerName').value,
-                sport: document.getElementById('sportType').value,
-                
-                // 照片（如果有）
-                hasPhoto: !!state.uploadedPhotoBase64,
-                photo: state.uploadedPhotoBase64 || null,
-                photoFileName: state.uploadedPhoto?.name || null
+                sport: document.getElementById('sportType').value
             };
 
             console.log('=== 發布資料 ===');
-            console.log('發文類型:', data.postType);
-            console.log('是否為圖片發文:', data.isImagePost);
             console.log('Threads:', data.threads);
             console.log('Facebook:', data.facebook);
-            console.log('Instagram:', data.instagram);
-            console.log('有照片:', data.hasPhoto);
             console.log('Webhook URL:', SETTINGS.webhookPublish);
 
             if (SETTINGS.webhookPublish && SETTINGS.webhookPublish.trim() !== '') {
@@ -2471,10 +2267,42 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
 
         // ==================== Settings ====================
         function loadSettings() {
-            const saved = localStorage.getItem('sportpress_settings');
+            // 嘗試從多個來源載入設定
+            let saved = null;
+            
+            // 1. 先嘗試 localStorage
+            try {
+                saved = localStorage.getItem('sportpress_settings');
+            } catch (e) {
+                console.warn('localStorage 無法存取:', e);
+            }
+            
+            // 2. 如果 localStorage 沒有，嘗試 sessionStorage
+            if (!saved) {
+                try {
+                    saved = sessionStorage.getItem('sportpress_settings');
+                } catch (e) {
+                    console.warn('sessionStorage 無法存取:', e);
+                }
+            }
+            
+            // 3. 解析儲存的設定
             if (saved) {
-                const parsed = JSON.parse(saved);
-                SETTINGS = { ...SETTINGS, ...parsed };
+                try {
+                    const parsed = JSON.parse(saved);
+                    SETTINGS = { ...SETTINGS, ...parsed };
+                    console.log('設定已從儲存空間載入');
+                } catch (e) {
+                    console.warn('設定解析失敗:', e);
+                }
+            }
+            
+            // 4. 如果 Webhook 還是空的，使用預設值
+            if (!SETTINGS.webhookGenerate && DEFAULT_WEBHOOKS.generate) {
+                SETTINGS.webhookGenerate = DEFAULT_WEBHOOKS.generate;
+            }
+            if (!SETTINGS.webhookPublish && DEFAULT_WEBHOOKS.publish) {
+                SETTINGS.webhookPublish = DEFAULT_WEBHOOKS.publish;
             }
             
             // Webhook
@@ -2512,6 +2340,11 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             
             // 更新按鈕顯示
             updateStyleButtons();
+            
+            console.log('目前設定:', {
+                webhookGenerate: SETTINGS.webhookGenerate ? '已設定' : '未設定',
+                webhookPublish: SETTINGS.webhookPublish ? '已設定' : '未設定'
+            });
         }
 
         function saveSettings() {
@@ -2553,7 +2386,21 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 }
             };
             
-            localStorage.setItem('sportpress_settings', JSON.stringify(SETTINGS));
+            const settingsJson = JSON.stringify(SETTINGS);
+            
+            // 同時儲存到 localStorage 和 sessionStorage（雙重備份）
+            try {
+                localStorage.setItem('sportpress_settings', settingsJson);
+            } catch (e) {
+                console.warn('localStorage 儲存失敗:', e);
+            }
+            
+            try {
+                sessionStorage.setItem('sportpress_settings', settingsJson);
+            } catch (e) {
+                console.warn('sessionStorage 儲存失敗:', e);
+            }
+            
             console.log('Settings saved:', SETTINGS);
             updateWebhookStatus();
             updateStyleButtons();
