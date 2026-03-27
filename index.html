@@ -1446,7 +1446,12 @@
             <!-- Settings Section -->
             <section class="page-section" id="pageSettings">
                 <div class="settings-container">
-                    <h2 style="margin-bottom: 24px;">系統設定</h2>
+                    <h2 style="margin-bottom: 12px;">系統設定</h2>
+                    <div id="settingsUserInfo" style="margin-bottom: 24px; padding: 12px 16px; background: linear-gradient(135deg, rgba(69, 123, 157, 0.2), rgba(29, 53, 87, 0.2)); border-radius: 8px; border-left: 4px solid var(--primary);">
+                        <span style="color: var(--text-muted);">目前登入：</span>
+                        <span id="settingsUserName" style="color: var(--primary); font-weight: 600;">使用者</span>
+                        <span style="color: var(--text-muted); margin-left: 8px;">（每位使用者的設定獨立儲存）</span>
+                    </div>
 
                     <!-- Webhook 1: Generate Post -->
                     <div class="settings-group">
@@ -1805,8 +1810,13 @@
                 state.currentUser = user;
                 document.getElementById('userName').textContent = user.name;
                 document.getElementById('userAvatar').textContent = user.name.slice(-2, -1) || user.name[0];
+                document.getElementById('settingsUserName').textContent = user.name;
                 loginScreen.style.display = 'none';
                 appContainer.classList.add('active');
+                
+                // 登入後載入該使用者的設定
+                loadSettings();
+                
                 showToast(`歡迎 ${user.name}！`);
             } else {
                 showToast('帳號或密碼錯誤', 'error');
@@ -1819,6 +1829,9 @@
             loginScreen.style.display = 'flex';
             loginForm.reset();
             clearDraft();
+            
+            // 登出後重設為預設設定
+            loadSettings();
         });
 
         // ==================== Navigation ====================
@@ -2278,13 +2291,19 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
         }
 
         // ==================== Settings ====================
+        function getStorageKey() {
+            // 根據目前登入的使用者產生儲存鍵值
+            const userId = state.currentUser?.id || 'default';
+            return `sportpress_settings_${userId}`;
+        }
+
         function loadSettings() {
-            // 嘗試從多個來源載入設定
+            const storageKey = getStorageKey();
             let saved = null;
             
             // 1. 先嘗試 localStorage
             try {
-                saved = localStorage.getItem('sportpress_settings');
+                saved = localStorage.getItem(storageKey);
             } catch (e) {
                 console.warn('localStorage 無法存取:', e);
             }
@@ -2292,31 +2311,53 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             // 2. 如果 localStorage 沒有，嘗試 sessionStorage
             if (!saved) {
                 try {
-                    saved = sessionStorage.getItem('sportpress_settings');
+                    saved = sessionStorage.getItem(storageKey);
                 } catch (e) {
                     console.warn('sessionStorage 無法存取:', e);
                 }
             }
             
-            // 3. 解析儲存的設定
+            // 3. 重設為預設值
+            SETTINGS = {
+                webhookGenerate: DEFAULT_WEBHOOKS.generate,
+                webhookPublish: DEFAULT_WEBHOOKS.publish,
+                googleSheetUrl: '',
+                promptBaseballPitcher: DEFAULT_PROMPTS.baseballPitcher,
+                promptBaseballFielder: DEFAULT_PROMPTS.baseballFielder,
+                promptBasketball: DEFAULT_PROMPTS.basketball,
+                style1: DEFAULT_STYLES.style1,
+                style2: DEFAULT_STYLES.style2,
+                style3: DEFAULT_STYLES.style3,
+                style4: DEFAULT_STYLES.style4,
+                style5: DEFAULT_STYLES.style5
+            };
+            
+            // 4. 解析儲存的設定（覆蓋預設值）
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     SETTINGS = { ...SETTINGS, ...parsed };
-                    console.log('設定已從儲存空間載入');
+                    console.log(`設定已載入（使用者：${state.currentUser?.name || '預設'}）`);
                 } catch (e) {
                     console.warn('設定解析失敗:', e);
                 }
+            } else {
+                console.log(`使用預設設定（使用者：${state.currentUser?.name || '預設'}）`);
             }
             
-            // 4. 如果 Webhook 還是空的，使用預設值
-            if (!SETTINGS.webhookGenerate && DEFAULT_WEBHOOKS.generate) {
+            // 5. 確保 Webhook 有值
+            if (!SETTINGS.webhookGenerate) {
                 SETTINGS.webhookGenerate = DEFAULT_WEBHOOKS.generate;
             }
-            if (!SETTINGS.webhookPublish && DEFAULT_WEBHOOKS.publish) {
+            if (!SETTINGS.webhookPublish) {
                 SETTINGS.webhookPublish = DEFAULT_WEBHOOKS.publish;
             }
             
+            // 更新 UI
+            updateSettingsUI();
+        }
+
+        function updateSettingsUI() {
             // Webhook
             document.getElementById('webhookGenerate').value = SETTINGS.webhookGenerate || '';
             document.getElementById('webhookPublish').value = SETTINGS.webhookPublish || '';
@@ -2352,8 +2393,10 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
             
             // 更新按鈕顯示
             updateStyleButtons();
+            updateWebhookStatus();
             
             console.log('目前設定:', {
+                使用者: state.currentUser?.name || '預設',
                 webhookGenerate: SETTINGS.webhookGenerate ? '已設定' : '未設定',
                 webhookPublish: SETTINGS.webhookPublish ? '已設定' : '未設定'
             });
@@ -2398,25 +2441,26 @@ ${highlight ? `🏆 重點：${highlight}\n\n` : ''}MVP 級表現！🏆
                 }
             };
             
+            const storageKey = getStorageKey();
             const settingsJson = JSON.stringify(SETTINGS);
             
             // 同時儲存到 localStorage 和 sessionStorage（雙重備份）
             try {
-                localStorage.setItem('sportpress_settings', settingsJson);
+                localStorage.setItem(storageKey, settingsJson);
             } catch (e) {
                 console.warn('localStorage 儲存失敗:', e);
             }
             
             try {
-                sessionStorage.setItem('sportpress_settings', settingsJson);
+                sessionStorage.setItem(storageKey, settingsJson);
             } catch (e) {
                 console.warn('sessionStorage 儲存失敗:', e);
             }
             
-            console.log('Settings saved:', SETTINGS);
+            console.log(`設定已儲存（使用者：${state.currentUser?.name || '預設'}）`, SETTINGS);
             updateWebhookStatus();
             updateStyleButtons();
-            showToast('設定已儲存');
+            showToast(`設定已儲存（${state.currentUser?.name || '預設'}）`);
         }
         
         function updateStyleButtons() {
